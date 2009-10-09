@@ -1,0 +1,2 @@
+main: main.c
+	gcc -o main -lpython2.5 -lm -L/usr/local/python2.5/config main.c
