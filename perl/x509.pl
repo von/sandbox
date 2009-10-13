@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Good documentation in githib code:
+# http://github.com/dsully/perl-crypt-openssl-x509/blob/master/X509.pm
+
 use Crypt::OpenSSL::X509;
 
 my $x509 = Crypt::OpenSSL::X509->new_from_file('cert.pem');
