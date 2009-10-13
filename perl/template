@@ -1,0 +1,8 @@
+Test: {$test} {$session}
+{
+	foreach $key (keys(%session)) {
+		my $value = $session{$key};
+		$OUT .= "<tr><td>$key</td><td>$value</td></tr>\n";
+	}
+}
+End.
