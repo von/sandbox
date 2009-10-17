@@ -3,14 +3,16 @@
 use CGI::Session;
 
 my $id = shift;
+# Name of cookie/parameter in which to store session ID in client
+my $params = { "name" => "MYID" };
 
 if (defined($id))
 {
-    $session = CGI::Session->load($id);
+    $session = CGI::Session->load(undef, $id, undef, $params);
 }
 else
 {
-    $session = new CGI::Session(undef);
+    $session = new CGI::Session(undef, undef, undef, $params );
 }
 
 if (!defined($id))
@@ -28,8 +30,6 @@ else
 {
     $count += 1;
 }
-
-print "Count: $count\n";
 
 $session->param("count", $count);
 
