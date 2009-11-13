@@ -5,6 +5,9 @@ use Config::General;
 my $configString = "
 <Block block1>
   Var = Value1
+  <SubBlock foo>
+    Var = SubValue
+  </SubBlocl>
 </Block>
 <Block block2>
   Var = Value2
@@ -23,8 +26,19 @@ my $blocks = $config->obj("Block");
 
 for my $key ($config->keys("Block"))
 {
-    my $value = $blocks->obj($key)->value("Var");
+    my $block = $blocks->obj($key);
+    my $value = $block->value("Var");
     print "Block: $key Var = $value\n";
+    print "Keys: " . join (' ', $block->keys()) . "\n";
+    if ($block->exists("SubBlock"))
+    {
+	print "Subblock:\n";
+	my @subBlockKeys = $block->keys("SubBlock");
+	for my $subBlockKey (@subBlockKeys)
+	{
+	    print "\t$subBlockKey\n";
+	}
+    }
 }
 
 
