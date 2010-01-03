@@ -2,12 +2,13 @@
 
 try:
     import foo
-except:
-    print "Import of foo failed."
+except ImportError, e:
+    print "Import of foo failed: %s" % e
 
 try:
     import os
-except:
+except  ImportError, e:
     print "Import of os failed."
 
+print "Successfully imported 'os'"
 print "Process pid is %d" % os.getpid()
