@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+#
+# Kudos: http://stackoverflow.com/questions/576169/python-super
+#
 
 class A(object):
     def routine(self):
