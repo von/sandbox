@@ -12,6 +12,8 @@ my $configString = "
 <Block block2>
   Var = Value2
 </Block>
+
+RootVar=Hello World
 ";
 
 my %options = (
@@ -41,4 +43,10 @@ for my $key ($config->keys("Block"))
     }
 }
 
+my %rootHash = $config->getall();
+
+print "Root Keys: " . join(' ', keys(%rootHash)) . "\n";
+print "RootVar=" . $rootHash{"RootVar"} . "\n";
+$rootHash{"RootVar"} = "Goodbye World";
+print $config->save_file("/tmp/rootHash", \%rootHash);
 
