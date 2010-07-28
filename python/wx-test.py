@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 import wx
 
+class App(wx.PySimpleApp):
+    def OnInit(self):
+        self.frame = Frame()
+        self.frame.Show()
+        return True
+
 class Frame(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(Frame, self).__init__(None, title="Hello World")
@@ -36,7 +42,5 @@ class Panel(wx.Panel):
         self.SetAutoLayout(1)
 
 if __name__ == '__main__':
-    app = wx.PySimpleApp()
-    frame = Frame()
-    frame.Show()
+    app = App()
     app.MainLoop()
