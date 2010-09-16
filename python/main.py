@@ -27,7 +27,10 @@ def main(argv=None):
         print "Running quietly..."
     # process arguments.
     for arg in args:
-        process(arg) # process() is defined elsewhere
+        error = process(arg) # process() is defined elsewhere
+        if error:
+            # Example of using error() method, which exits
+            parser.error("Bad argument %s" % arg)
     # Rest of main() function follows...
 
 if __name__ == "__main__":
