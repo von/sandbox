@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-"""Module docstring.
+"""An example python application.
 
-This serves as a long usage message.
+%prog [<some options>] <some arguments>
 
-This is an example python application. Kudos:
-http://www.artima.com/weblogs/viewpost.jsp?thread=4829
+This script docstring serves as a usage message (with -h).
+
+Kudos: http://www.artima.com/weblogs/viewpost.jsp?thread=4829
 
 Modifed to use optparse instead of getopt.
 """
@@ -17,7 +18,7 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv
     parser = OptionParser(
-        usage="%prog [<options>] <some arg>", # printed with -h/--help
+        usage=__doc__, # printed with -h/--help
         version="%prog 1.0" # automatically generates --version
         )
     parser.add_option("-q", "--quiet", action="store_true", dest="quiet",
