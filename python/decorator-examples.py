@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """Examples of decorators"""
 
+from functools import wraps
+
 class MyDecorator1(object):
     """Example of decorator using a class and __call__()
 
@@ -37,6 +39,7 @@ class MyDecorator3(object):
         """Decorate the function if decoration_on == True, otherwise
         return unmodified function."""
         if cls.decoration_on:
+            @wraps(function)
             def new_function(*args, **kwargs):
                 print "Decoration!"
                 function(*args, **kwargs)
@@ -69,3 +72,6 @@ func1("Hello world")
 func2("Goodbye world")
 func3("Hello again")  # Should not be decorated
 func4("Goodbye again")
+
+print "Wrapped func2 without @wraps: {}".format(func2.__name__)
+print "Wrapped func4 with @wraps: {}".format(func4.__name__)
