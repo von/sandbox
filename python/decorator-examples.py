@@ -22,6 +22,29 @@ def MyDecorator2(function):
         print "Exiting decorated function {0.__name__}".format(function)
     return new_function
 
+class MyDecorator3(object):
+    """Example of a decorator that can decorate a function or not depending
+    on class state."""
+    decoration_on = True
+
+    @classmethod
+    def do_decoration(cls, value=True):
+        """Set whether or not decorate() decorates or not."""
+        cls.decoration_on = value
+
+    @classmethod
+    def decorate(cls, function):
+        """Decorate the function if decoration_on == True, otherwise
+        return unmodified function."""
+        if cls.decoration_on:
+            def new_function(*args, **kwargs):
+                print "Decoration!"
+                function(*args, **kwargs)
+                print "End decoration!"
+            return new_function
+        else:
+            return function
+        
 @MyDecorator1
 def func1(msg):
     print "Inside func1({})".format(msg)
@@ -30,6 +53,19 @@ def func1(msg):
 def func2(msg):
     print "Inside func2({})".format(msg)
 
+MyDecorator3.do_decoration(False)
+
+@MyDecorator3.decorate
+def func3(msg):
+    print "Inside func3({})".format(msg)
+    
+MyDecorator3.do_decoration(True)
+
+@MyDecorator3.decorate
+def func4(msg):
+    print "Inside func4({})".format(msg)
+    
 func1("Hello world")
 func2("Goodbye world")
-
+func3("Hello again")  # Should not be decorated
+func4("Goodbye again")
