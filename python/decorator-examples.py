@@ -75,3 +75,30 @@ func4("Goodbye again")
 
 print "Wrapped func2 without @wraps: {}".format(func2.__name__)
 print "Wrapped func4 with @wraps: {}".format(func4.__name__)
+
+######################################################################
+
+def add_method(instance):
+    """Add decorated function as method to given instance.
+
+    Kudos: http://wiki.python.org/moin/PythonDecoratorLibrary#Easyaddingmethodstoaclassinstance
+    """
+    def decorator(f):
+        import types
+        f = types.MethodType(f, instance, instance.__class__)
+        setattr(instance, f.func_name, f)
+        return f
+    return decorator
+
+class Foo:
+    def __init__(self):
+        self.x = 42
+
+foo = Foo()
+
+@add_method(foo)
+def get_x(self):
+    return self.x
+
+print "foo.get_x() = {}".format(foo.get_x())
+
