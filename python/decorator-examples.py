@@ -102,3 +102,38 @@ def get_x(self):
 
 print "foo.get_x() = {}".format(foo.get_x())
 
+######################################################################
+
+def class_decorator(cls):
+    """Decorate a class"""
+    def method(self):
+        """Return the instance atttibute 'x'"""
+        return self.x
+    @classmethod
+    def clsmethod(cls):
+        """Return the class atttibute 'y'"""
+        return cls.y
+    @staticmethod
+    def smethod():
+        """Return the string 'foo'"""
+        return "foo"
+    setattr(cls, method.__name__, method)
+    # @classmethod and @staticmethod apparently don't set __name__
+    # so we have to explicitly name the attibutes here
+    setattr(cls, "clsmethod", clsmethod)
+    setattr(cls, "smethod", smethod)
+    return cls
+
+@class_decorator
+class Test(object):
+    """Class to be decorated"""
+    y = 99
+
+    def __init__(self):
+        self.x = 42
+
+t = Test()
+
+print "t.method() = {} t.clsmethod = {} t.smethod = {}".format(t.method(),
+                                                               t.clsmethod(),
+                                                               t.smethod())
