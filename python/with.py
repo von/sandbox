@@ -12,6 +12,8 @@ http://www.python.org/dev/peps/pep-0343/
 """
 
 from contextlib import contextmanager
+import os
+import sys
 
 class with_example:
     def hello(self):
@@ -67,3 +69,41 @@ try:
         raise ValueError('this exception is not handled')
 except ValueError, e:
     print "ValueError not handled as expected: {}".format(e)
+
+print """
+######################################################################
+"""
+
+class stdout_to_pipe(object):
+    def __enter__(self):
+        self.saved_stdout = sys.stdout
+        read_fd, write_fd = os.pipe()
+        reader = os.fdopen(read_fd)
+        writer = os.fdopen(write_fd, "w", 0)  # 0 == unbuffered
+        sys.stdout = writer
+        return reader
+
+    def __exit__(self, type, value, traceback):
+        sys.stdout = self.saved_stdout
+
+class pipe_to_stdin(object):
+    def __enter__(self):
+        self.saved_stdin = sys.stdin
+        read_fd, write_fd = os.pipe()
+        reader = os.fdopen(read_fd)
+        writer = os.fdopen(write_fd, "w", 0)  # 0 == unbuffered
+        sys.stdin = reader
+        return writer
+
+    def __exit__(self, type, value, traceback):
+        sys.stdin = self.saved_stdin
+
+with stdout_to_pipe() as out:
+    print "Hello from stdout_as_pipe()!"
+    a = out.readline()
+
+print "Captured output: " + a
+
+with pipe_to_stdin() as input:
+    input.write("Hello world!\n")
+    print "Captured input: " + sys.stdin.readline()
