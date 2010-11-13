@@ -29,5 +29,6 @@ class some_class(object):
  
 if __name__ == "__main__":
     import doctest
-    doctest.testmod(verbose=False)
+    (failures, tests) = doctest.testmod(verbose=False)
+    print "{} tests ran with {} failures".format(tests, failures)
 
