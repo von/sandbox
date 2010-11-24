@@ -32,7 +32,20 @@ def main(argv=None):
     print "Calling generator.next() 10 more times. Should not print 'Hello world!'"
     for i in range(10):
         print gen.next()
-        
+
+    print "Creating generator via expression"
+    gen_exp = (x*x for x in range(10))
+
+    print "Using generator from expression"
+    for i in gen_exp:
+        print i
+
+    print "Slightly more fun generator expression" \
+        " that only does even numbers..."
+    gen_exp = (x*x for x in range(10) if x%2 == 0)
+    for i in gen_exp:
+        print i
+
     return(0)
 
 
