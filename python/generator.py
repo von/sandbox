@@ -14,12 +14,17 @@ def my_generator(n):
     the next() method is called.
 
     The fact the function contains a yield statement causes it to be
-    a generator."""
+    a generator.
+
+    This particular generate never stops unless close()ed"""
     print "Hello world! I'm a generator."
     i = 1
-    while True:
-        yield "I generated %d" % (i * n)
-    # This particular generate never stops
+    try:
+        while True:
+            yield "I generated %d" % (i * n)
+            i += 1
+    except GeneratorExit:
+        print "Generator closed at i=%d" % i
 
 
 def main(argv=None):
@@ -32,6 +37,7 @@ def main(argv=None):
     print "Calling generator.next() 10 more times. Should not print 'Hello world!'"
     for i in range(10):
         print gen.next()
+    gen.close()
 
     print "Creating generator via expression"
     gen_exp = (x*x for x in range(10))
