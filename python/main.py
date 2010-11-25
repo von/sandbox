@@ -15,6 +15,7 @@ import sys
 def process(arg):
     """Print the given argument"""
     print "Argument: {}".format(arg)
+    # Allow command-line argument to create an error
     if arg == "error":
         return True
     return False
@@ -36,7 +37,7 @@ def main(argv=None):
     # Argument parsing
     parser = argparse.ArgumentParser(
         description=__doc__, # printed with -h/--help
-        # Don't mess woth formation of description
+        # Don't mess with format of description
         formatter_class=argparse.RawDescriptionHelpFormatter,
         )
     # Only allow one of debug/quiet mode
@@ -53,7 +54,8 @@ def main(argv=None):
                         help="Log output to file", metavar="FILE")
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
     parser.add_argument('args', metavar='args', type=str, nargs='+',
-                        help='some extra arguments')
+                        help='some extra arguments' +\
+                            ' (use "error" to trigger an error)')
     args = parser.parse_args()
     output_handler.setLevel(args.output_level)
     if args.log_file:
@@ -64,12 +66,11 @@ def main(argv=None):
     output.info("Processing arguments...")
     for arg in args.args:
         output.debug("Processing '{}'...".format(arg))
-        error = process(arg) # process() is defined elsewhere
+        error = process(arg)
         if error:
             # Example of using error() method, which exits
             parser.error("Bad argument \"{}\"".format(arg))
-    # Rest of main() function follows...
-    output.warning("Would run rest of main code here...")
+    output.warning("Rest of main() would normally run here...")
     return(0)
 
 if __name__ == "__main__":
