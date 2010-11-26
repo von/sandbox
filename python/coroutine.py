@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""coroutine demonstration
+"""coroutine and generator demonstration
 
 Kudos: David Beazley http://www.dabeaz.com/coroutines/
 
@@ -18,6 +18,40 @@ def coroutine(func):
         cr.next()
         return cr
     return start
+
+# Don't use '@coroutine' decorator here for demonstration purposes
+def coroutine_example(starting_sum=0):
+    """When invoked, a GeneratorType is returned.
+
+    The first time next() (or send(None)) is invoked, everything up to the
+    first yield is run (and the RValue of the yield is returned).
+
+    On the first send() the argument to the send() call is returned from the
+    yield and the function is run until the next yield. At which point
+    the RValue to the yield is returned from the calling send().
+
+    This example computes a running sum. This is a simple example of keeping
+    state in a coroutine. Seems like the biggest win of coroutines over
+    regular functions is state. More complex examples would be open files
+    sockets, queues, etc.
+
+    This whole yield RValue thing I got from:
+    http://dabeaz.blogspot.com/2010/07/yieldable-threads-part-1.html
+    Is also in coroutines tutorial starting around slide 135.
+    """
+    sum = starting_sum
+    while True:
+        value = yield sum
+        sum += value
+
+def coroutine_example2(starting_sum=0):
+    """Another exmple with yield split into two yields, but otherwise
+    the same."""
+    sum = starting_sum
+    while True:
+        value = yield
+        sum += value
+        yield sum
 
 def generator_function(n):
     """Return string representations of number 1..n"""
@@ -95,6 +129,22 @@ def main(argv=None):
     gc = generator_class(11)
     send_generator_to_coroutine(gc, g)
 
+    # Take four, with coroutine_example()
+    cr = coroutine_example(starting_sum=7)
+    # The following line could be send(None) as well.
+    s = cr.next()  # Will yield sum from first time in loop.
+    print "Starting value: {}".format(s)
+    for i in range(10):
+        sum = cr.send(i)
+        print sum
+
+    # Take four, with coroutine_example2()
+    cr2 = coroutine_example2(starting_sum=13)
+    s = cr2.next()
+    print "Starting value: {}".format(s)
+    for i in range(10):
+        sum = cr2.send(i)
+        print sum
     print "Done."
 
 if __name__ == "__main__":
