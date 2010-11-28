@@ -2,6 +2,7 @@
 """Examples of decorators"""
 
 from functools import wraps
+import inspect
 
 class MyDecorator1(object):
     """Example of decorator using a class and __call__()
@@ -117,11 +118,30 @@ def class_decorator(cls):
     def smethod():
         """Return the string 'foo'"""
         return "foo"
+
+    # Wrap any existing methods starting with "some".
+    # ismethod() doesn't work here, must use isfunction
+    method_names = [name for name in cls.__dict__
+                    if inspect.isfunction(cls.__dict__[name])]
+    mod_method_names = filter(lambda s: s.startswith("some"), method_names)
+
+    def wrap_method(m):
+        @wraps(m)
+        def w(*args, **kwargs):
+            print "Wrapped method!"
+            m(*args, **kwargs)
+        return w
+
+    for method_name in mod_method_names:
+        setattr(cls, method_name, wrap_method(cls.__dict__[method_name]))
+
+    # Add some methods
     setattr(cls, method.__name__, method)
     # @classmethod and @staticmethod apparently don't set __name__
     # so we have to explicitly name the attibutes here
     setattr(cls, "clsmethod", clsmethod)
     setattr(cls, "smethod", smethod)
+    
     return cls
 
 @class_decorator
@@ -132,8 +152,14 @@ class Test(object):
     def __init__(self):
         self.x = 42
 
+    def some_method(self):
+        pass
+
 t = Test()
 
 print "t.method() = {} t.clsmethod = {} t.smethod = {}".format(t.method(),
                                                                t.clsmethod(),
                                                                t.smethod())
+
+# Should print "Wrapped method!"
+t.some_method()
