@@ -25,4 +25,9 @@ from SomeClass import SomeClass
 
 # Both FooClass and SomeClass can now be imported via PackageDemo
 
+# __path__ is set to a list containing a single element, that being
+# the path holding the package's __init__.py file.
+my_package_path = __path__[0]
+
+
     

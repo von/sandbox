@@ -49,6 +49,10 @@ def main(argv=None):
     print SomeClass.__doc__
     some = SomeClass
 
+    output.info("Getting package path")
+    from PackageDemo import my_package_path
+    print "Package path is:", my_package_path
+                
     output.info("That's all")
     return(0)
 
