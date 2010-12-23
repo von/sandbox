@@ -16,12 +16,14 @@ class App(wx.PySimpleApp):
         return True
 
     def HelloWorld(self, event):
-        leftText = wx.FindWindowByName("LeftText")
-        if leftText:
-            leftText.SetValue("Hello")
-        rightText = wx.FindWindowByName("RightText")
-        if rightText:
-            rightText.SetValue("World")
+        # The thing to notice here is we are getting the reference to
+        # the Panel child class as defined in this file, so we can
+        # call not only the wx.Panel methods, but methods in the child
+        # class.
+        panel = wx.FindWindowByName("MyPanel")
+        if panel is not None:
+            panel.Hello()
+            panel.World()
 
 class Frame(wx.Frame):
     def __init__(self, *args, **kwargs):
@@ -56,6 +58,18 @@ class Panel(wx.Panel):
                   flag=wx.ALIGN_CENTER|wx.EXPAND)
         self.SetSizerAndFit(sizer)
         self.SetAutoLayout(1)
+
+    def Hello(self):
+        """Make the word 'Hello' appear in the LeftText text box."""
+        leftText = wx.FindWindowByName("LeftText")
+        if leftText:
+            leftText.SetValue("Hello")
+
+    def World(self):
+        """Make the word 'World' appear in the RightText text box."""
+        rightText = wx.FindWindowByName("RightText")
+        if rightText:
+            rightText.SetValue("World")
 
 if __name__ == '__main__':
     app = App()
