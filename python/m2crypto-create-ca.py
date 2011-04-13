@@ -53,9 +53,6 @@ def main(argv=None):
                         help="specify certificate lifetime in days",
                         metavar="days")
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
-    parser.add_argument('args', metavar='args', type=str, nargs='?',
-                        help='some extra arguments' +\
-                            ' (use "error" to trigger an error)')
     args = parser.parse_args()
     output_handler.setLevel(args.output_level)
 
