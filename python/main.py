@@ -39,6 +39,8 @@ def main(argv=None):
         description=__doc__, # printed with -h/--help
         # Don't mess with format of description
         formatter_class=argparse.RawDescriptionHelpFormatter,
+        # To have --help print defaults with trade-off it changes
+        # formatting, use: ArgumentDefaultsHelpFormatter
         )
     # Only allow one of debug/quiet mode
     verbosity_group = parser.add_mutually_exclusive_group()
