@@ -53,6 +53,12 @@ def main(argv=None):
                         help="specify certificate lifetime in days",
                         metavar="days")
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
+    parser.add_argument("certFile", metavar="path", type=str, nargs="?",
+                        default="ca-cert.pem",
+                        help="where to save PEM-encoded certificate")
+    parser.add_argument("keyFile", metavar="path", type=str, nargs="?",
+                        default="ca-key.pem",
+                        help="where to save PEM-encoded key")
     args = parser.parse_args()
     output_handler.setLevel(args.output_level)
 
@@ -82,9 +88,12 @@ def main(argv=None):
     ext.set_critical()
     cert.add_ext(ext)
     cert.sign(key, 'sha1')
-    print cert.as_text()
-    print cert.as_pem()
-                
+    output.info("Saving certificate to {}".format(args.certFile))
+    cert.save_pem(args.certFile)
+    output.info("Saving private key to {}".format(args.keyFile))
+    key.save_key(args.keyFile, cipher=None)  # cipher=None -> save in the clear
+    output.info("Success.")
+
     return(0)
 
 if __name__ == "__main__":
