@@ -36,7 +36,7 @@ def parse_args(argv):
         )
     conf_parser.add_argument("-c", "--conf_file",
                         help="Specify config file", metavar="FILE")
-    args, remaining_argv = conf_parser.parse_known_args()
+    args, remaining_argv = conf_parser.parse_known_args(argv[1:])
     defaults = {
         "output_level" : logging.INFO,
         "option" : "default option",
