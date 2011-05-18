@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""NOTE: dbhash hash been deprecated since version 2.6: The dbhash module has been deprecated for removal in Python 3.0."""
 
 import sys
 
