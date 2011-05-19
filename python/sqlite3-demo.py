@@ -39,10 +39,12 @@ keys = set([ row[0] for row in db.fetchall() ])
 
 print keys
 
-print "Listing just one key..."
-db.execute("select key from entries where key=?", ("AA",))  # Note ',' in tuple
-keys = set([ row[0] for row in db.fetchall() ])
-print keys
+print "Updating 'BB' entry..."
+db.execute("update entries set value=? where key=?", ("NEW Value", "BB"))
+
+print "Listing just one row..."
+db.execute("select * from entries where key=?", ("BB",))  # Note ',' in tuple
+print db.fetchone()
 
 print "Listing all duplicate keys..."
 db.execute("select key, count(key) as NumOccurrences from entries group by key having (count(key) > 1)")
