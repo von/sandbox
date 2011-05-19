@@ -13,6 +13,9 @@ db = db_conn.cursor()
 
 db.execute("create table entries ( key text, value text, attribute text, time int )")
 
+tables = db.execute("SELECT name FROM sqlite_master WHERE type='table';")
+print "Tables: " + ",".join([row[0] for row in tables.fetchall()])
+
 values = [
     ( "AA", "value", "attribute", 99 ),
     ( "BB", "test", "hello", 4 ),
