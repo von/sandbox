@@ -12,6 +12,7 @@ Modified to read configuration file for defaults.
 import argparse
 import ConfigParser
 import logging
+import logging.config
 import sys
 
 def process(arg):
@@ -65,18 +66,19 @@ def parse_args(argv):
         formatter_class=argparse.RawDescriptionHelpFormatter,
         )
     parser.set_defaults(**defaults)
-    # Only allow one of debug/quiet mode
-    verbosity_group = parser.add_mutually_exclusive_group()
-    verbosity_group.add_argument("-d", "--debug",
-                                 action='store_const', const=logging.DEBUG,
-                                 dest="output_level", 
-                                 help="print debugging")
-    verbosity_group.add_argument("-q", "--quiet",
-                                 action="store_const", const=logging.WARNING,
-                                 dest="output_level",
-                                 help="run quietly")
-    parser.add_argument("-f", "--log_file",
-                        help="Log output to file", metavar="FILE")
+    # Only allow one of these logging options
+    logging_group = parser.add_mutually_exclusive_group()
+    logging_group.add_argument("-d", "--debug",
+                               action='store_const', const=logging.DEBUG,
+                               dest="output_level", 
+                               help="print debugging")
+    logging_group.add_argument("-q", "--quiet",
+                               action="store_const", const=logging.WARNING,
+                               dest="output_level",
+                               help="run quietly")
+    logging_group.add_argument("-l", "--logging_config",
+                               help="Read logging configuration from file",
+                               metavar="FILE")
     parser.add_argument("--option", help="some option")
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
     parser.add_argument('args', metavar='args', type=str, nargs='+',
@@ -91,22 +93,22 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv
 
-    # Set up out output via logging module
-    output = logging.getLogger(argv[0])
-    output.setLevel(logging.DEBUG)
-    output_handler = logging.StreamHandler(sys.stdout)  # Default is sys.stderr
-    # Set up formatter to just print message without preamble
-    output_handler.setFormatter(logging.Formatter("%(message)s"))
-    output.addHandler(output_handler)
-
     args = parse_args(argv)
 
-    output_handler.setLevel(args.output_level)
-    if args.log_file:
-        file_handler = logging.FileHandler(args.log_file)
-        file_handler.setFormatter(logging.Formatter("%(asctime)s:%(message)s"))
-        output.addHandler(file_handler)
-        output.debug("Logging to file {}".format(args.log_file))
+    if args.logging_config:
+        logging.config.fileConfig(args.logging_config)
+        output = logging.getLogger(argv[0])
+    else:
+        # Set up out output via logging module
+        output = logging.getLogger(argv[0])
+        output.setLevel(logging.DEBUG)
+        # Change from default sys.stderr
+        output_handler = logging.StreamHandler(sys.stdout)
+        # Set up formatter to just print message without preamble
+        output_handler.setFormatter(logging.Formatter("%(message)s"))
+        output.addHandler(output_handler)
+        output_handler.setLevel(args.output_level)
+
     output.info("Option is \"{}\"".format(args.option))
     output.info("Processing arguments...")
     for arg in args.args:
