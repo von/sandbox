@@ -14,6 +14,7 @@ http://www.python.org/dev/peps/pep-0343/
 from contextlib import contextmanager
 import os
 import sys
+import traceback
 
 class with_example:
     def hello(self):
@@ -107,3 +108,36 @@ print "Captured output: " + a
 with pipe_to_stdin() as input:
     input.write("Hello world!\n")
     print "Captured input: " + sys.stdin.readline()
+
+print """
+######################################################################
+#
+# Modify an exception
+"""
+
+class ExceptionModifier:
+    """Change any IOError to ValueError"""
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, tb):
+        if type == IOError:
+            raise ValueError, value
+        return False  # handler should reraise exception
+
+try:
+    with ExceptionModifier():
+        raise IOError("Raising IO Error")
+except ValueError as e:
+    print "Caught ValueError as expected:", e
+    traceback.print_exc()
+
+try:
+    with ExceptionModifier():
+        raise SyntaxError("Raising Syntax Error")
+except SyntaxError as e:
+    print "Caught SyntaxError as expected", e
+
+print "Done."
+sys.exit(0)
+
