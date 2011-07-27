@@ -27,7 +27,7 @@ function timeout()
 	    sleep $interval
 	    ((timeout -= interval))
 	else
-	    # Child dead, get and return exist status
+	    # Child dead, get and return exit status
 	    wait $child_pid
 	    return $?
 	fi
