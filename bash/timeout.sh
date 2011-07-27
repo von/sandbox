@@ -21,11 +21,16 @@ function timeout()
 
     while ((timeout > 0)); do
 	# kill -0 <pid> tells if process can receive a signal (is alive)
-	# If child dead, we're done
-	kill -0 $child_pid 2> /dev/null || return
-	# else, sleep and check it again until we hit timeout
-	sleep $interval
-	((timeout -= interval))
+	# See if child still alive
+	if kill -0 $child_pid 2> /dev/null ; then
+	    # Still alive, sleep and check it again until we hit timeout
+	    sleep $interval
+	    ((timeout -= interval))
+	else
+	    # Child dead, get and return exist status
+	    wait $child_pid
+	    return $?
+	fi
     done
 
     # We timed out, kill child, nicely first with SIGTERM
