@@ -10,7 +10,7 @@ function timeout()
     # Usage: <timeout> <command> <args...>
     timeout=$1; shift
     
-    $* 2> /dev/null &
+    $* &
 
     child_pid=$!
     # Avoid termination message
