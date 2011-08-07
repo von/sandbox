@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 """An example python application.
 
+This allow for specification of a configuration file that can be
+overridden by command line options.
+
 This script docstring serves as a usage message (with -h).
 
 Kudos: http://www.artima.com/weblogs/viewpost.jsp?thread=4829
