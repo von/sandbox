@@ -122,6 +122,10 @@ class ExceptionModifier:
 
     def __exit__(self, type, value, tb):
         if type == IOError:
+            # Reraise with original stacktrace and instance
+            # information, but with new class.  Note that one
+            # cannot hide the current line from the traceback. See
+            # http://stackoverflow.com/questions/6410764/raising-exceptions-without-raise-in-the-traceback
             raise ValueError, value
         return False  # handler should reraise exception
 
