@@ -13,3 +13,9 @@ declare -i i=5
 echo "i=$i"
 i+=7
 echo "i=$i"
+
+# let also works
+c=5
+echo "c=$c"
+let c+=10
+echo "c=$c"
