@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 """Example of using a Deferred instance"""
 
+import time
+
 from twisted.internet import reactor
-from twisted.internet.defer import Deferred, DeferredList
+from twisted.internet.defer import Deferred, DeferredList, execute
 
 def defered_answer(x):
     """Returns a defered whose callback will be called multiple times."""
@@ -21,6 +23,13 @@ def defered_answers(n):
     dl = DeferredList(ds)
     return dl
 
+def slow_answers(n):
+    """Take a while to return an answer."""
+    print "slow_answers() called..."
+    time.sleep(5)
+    print "slow_answers() returning..."
+    return n*2
+    
 def callback(d):
     """Prints data"""
     print "Callback:", d
@@ -38,5 +47,8 @@ d.addCallback(callback)
 dl = defered_answers(3)
 dl.addCallback(list_callback)
 
-reactor.callLater(5, reactor.stop)
+d = execute(slow_answers, 6)
+d.addCallback(callback)
+
+reactor.callLater(10, reactor.stop)
 reactor.run()
