@@ -3,7 +3,7 @@
 
 http://pythonpaste.org/tempita/
 """
-from tempita import Template, bunch
+from tempita import HTMLTemplate, Template, bunch
 
 import sys
 
@@ -54,6 +54,22 @@ context_params = {
 }
 
 print t.substitute(context_params)
+
+print "\nDoing HTML subsitution..."
+
+html_template_string="""
+{{# A little counter-intuitive, but use 'html()' to substitute without quotes }}
+<a href="{{ target_url | html }}">{{ target_name }}</a>
+"""
+
+t2 = HTMLTemplate(html_template_string)
+
+context_params2 = {
+    "target_url" : "https://example.com/hello?world&value=2",
+    "target_name" : "Here & There",
+}
+
+print t2.substitute(context_params2)
 
 sys.exit(0)
 
