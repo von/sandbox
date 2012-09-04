@@ -21,8 +21,13 @@ A multi-line comment.
 
 <%
 # This is a Block of raw python.
-nums = range(5)
+max = 5
+nums = range(max)
 %>
+
+
+## Accept variable set in Python block
+Max is ${max}.
 
 <%def name="myfunc(n)">
    % if n == 3:
