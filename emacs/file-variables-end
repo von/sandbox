@@ -1,0 +1,8 @@
+# Method of specifying file variables at end of file
+#
+# Kudos:
+# http://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html
+#
+# Local Variables:
+# mode: Shell-script
+# End:

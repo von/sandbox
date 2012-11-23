@@ -1,0 +1,5 @@
+# -*- mode: Shell-Script; fill-column: 75; comment-column: 50; -*-
+# Method of specifying file variables in first line of file.
+#
+# Kudos:
+# http://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html
