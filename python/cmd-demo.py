@@ -15,24 +15,31 @@ class MyCmd(cmd.Cmd):
 
     def do_EOF(self, remainder):
         """Handle EOF"""
-        self.do_quit(remainder)
+        return True
 
     def do_echo(self, remainder):
         """Echo arguments"""
         print remainder
+        return False
 
     def do_ls(self, remainder):
         """List files"""
         retcode = subprocess.call(['ls'] + self._split(remainder))
+        return False
 
     def do_quit(self, remainder):
         """Quit"""
-        sys.exit(0)
+        return True
 
     def do_split(self, remainder):
         """Split and echo arguments"""
         args = self._split(remainder)
         print ",".join(args)
+        return False
+
+    def postcmd(self, stop, line):
+        """Return True if we are done"""
+        return stop
 
     @staticmethod
     def _split(line):
