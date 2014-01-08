@@ -4,6 +4,8 @@
 
 Kudos: http://www.toptal.com/python/an-introduction-to-mocking-in-python
 
+mock docs: http://www.voidspace.org.uk/python/mock/index.html
+
 For pre-3.3 python, you need to install mock:
     pip install mock
 """
