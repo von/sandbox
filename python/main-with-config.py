@@ -118,8 +118,8 @@ def main(argv=None):
         output.debug("Processing '{}'...".format(arg))
         error = process(arg)
         if error:
-            # Example of using error() method, which exits
-            parser.error("Bad argument \"{}\"".format(arg))
+            output.error("Bad argument \"{}\"".format(arg))
+            sys.exit(1)
     output.warning("Rest of main() would normally run here...")
     return(0)
 
