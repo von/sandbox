@@ -10,7 +10,22 @@ Modified to use argparse (new in 2.7) instead of getopt.
 from __future__ import print_function  # So we can get at print()
 
 import argparse
+import pdb
 import sys
+import traceback
+
+
+# Handle uncaught exception by opening debugger
+# Kudos: Doug Hellman and http://stackoverflow.com/a/6234491/197789
+def exception_catcher(type, value, tb):
+    """Handle uncaught exceptions
+
+    Intended to be used for sys.excepthook"""
+    traceback.print_exc()
+    pdb.post_mortem(tb)
+
+sys.excepthook = exception_catcher
+
 
 # Output functions
 output = print
