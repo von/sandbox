@@ -31,6 +31,7 @@ sys.excepthook = exception_catcher
 output = print
 debug = print
 
+
 def process(arg):
     """Print the given argument"""
     output("Argument: {}".format(arg))
@@ -38,6 +39,7 @@ def process(arg):
     if arg == "error":
         return True
     return False
+
 
 def main(argv=None):
     # Do argv default this way, as doing it in the functional
@@ -47,12 +49,12 @@ def main(argv=None):
 
     # Argument parsing
     parser = argparse.ArgumentParser(
-        description=__doc__, # printed with -h/--help
+        description=__doc__,  # printed with -h/--help
         # Don't mess with format of description
         formatter_class=argparse.RawDescriptionHelpFormatter,
         # To have --help print defaults with trade-off it changes
         # formatting, use: ArgumentDefaultsHelpFormatter
-        )
+    )
     # Only allow one of debug/quiet mode
     verbosity_group = parser.add_mutually_exclusive_group()
     verbosity_group.add_argument("-d", "--debug",
@@ -63,8 +65,8 @@ def main(argv=None):
                                  help="run quietly")
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
     parser.add_argument('args', metavar='args', type=str, nargs='+',
-                        help='some extra arguments' +\
-                            ' (use "error" to trigger an error)')
+                        help='some extra arguments' +
+                        ' (use "error" to trigger an error)')
     args = parser.parse_args()
 
     global output

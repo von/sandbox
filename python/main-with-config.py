@@ -18,6 +18,7 @@ import logging
 import logging.config
 import sys
 
+
 def process(arg):
     """Print the given argument"""
     print "Argument: {}".format(arg)
@@ -25,6 +26,7 @@ def process(arg):
     if arg == "error":
         return True
     return False
+
 
 def parse_args(argv):
     """Parse commandline arguments taking default from configuration file.
@@ -37,20 +39,20 @@ def parse_args(argv):
     conf_parser = argparse.ArgumentParser(
         # Turn off help, so we print all options in response to -h
         add_help=False
-        )
+    )
     conf_parser.add_argument("-c", "--conf_file",
-                        help="Specify config file", metavar="FILE")
+                             help="Specify config file", metavar="FILE")
     args, remaining_argv = conf_parser.parse_known_args(argv[1:])
     defaults = {
-        "output_level" : logging.INFO,
-        "option" : "default option",
-        }
+        "output_level": logging.INFO,
+        "option": "default option",
+    }
     if args.conf_file:
         # Mappings from configuraition file to options
         conf_mappings = [
             # ((section, option), option)
             (("Defaults", "option"), "option")
-            ]
+        ]
         config = ConfigParser.SafeConfigParser()
         config.read([args.conf_file])
         for sec_opt, option in conf_mappings:
@@ -67,13 +69,13 @@ def parse_args(argv):
         description=__doc__,
         # Don't mess with format of description
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        )
+    )
     parser.set_defaults(**defaults)
     # Only allow one of these logging options
     logging_group = parser.add_mutually_exclusive_group()
     logging_group.add_argument("-d", "--debug",
                                action='store_const', const=logging.DEBUG,
-                               dest="output_level", 
+                               dest="output_level",
                                help="print debugging")
     logging_group.add_argument("-q", "--quiet",
                                action="store_const", const=logging.WARNING,
@@ -85,10 +87,11 @@ def parse_args(argv):
     parser.add_argument("--option", help="some option")
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
     parser.add_argument('args', metavar='args', type=str, nargs='+',
-                        help='some extra arguments' +\
-                            ' (use "error" to trigger an error)')
+                        help='some extra arguments' +
+                        ' (use "error" to trigger an error)')
     args = parser.parse_args(remaining_argv)
     return args
+
 
 def main(argv=None):
     # Do argv default this way, as doing it in the functional
