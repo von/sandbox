@@ -25,10 +25,10 @@ class ExceptionHolder:
 
         This exception will seem to come from part_one()."""
         exc_class, exc, tb = self.exc_info
-        # Create new exception as original class and modified message
-        new_exc = exc_class("Re-raised exception: %s"
-                            % (exc or exc_class))
-        raise self.exc_info[0], new_exc, self.exc_info[2]
+        current_msg = str(exc) if exc else str(exc_class)
+        new_exc = exc_class("Re-raised exception: " + current_msg)
+        raise exc_class, new_exc, tb
+
 
 eh = ExceptionHolder()
 eh.part_one()
