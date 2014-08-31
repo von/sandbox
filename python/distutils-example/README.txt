@@ -1,13 +1,15 @@
 This is an example python package set up for distribution with
-distutils.
+setuptools (a more powerful version of distutils).
 
-See http://docs.python.org/distutils/index.html
+See https://pythonhosted.org/setuptools/setuptools.html
 
 Some common commands:
 
- * 'python setup.py install' Install package.
+ * './setup.py install' Install package.
 
- * 'python setup.py sdist' Create a source distribution.
+ * './setup.py sdist' Create a source distribution.
+
+ * './setup.py develop' Install linked for development (not in distutils).
 
 Some notes:
 

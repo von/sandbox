@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-from distutils.core import setup
+# setuptools is a more powerful version of distutils
+try:
+    from setuptools import setup
+except:
+    from distutils.core import setup
 
 setup(name='distutils-example',
       version='1.0',
