@@ -11,7 +11,7 @@ setup(name='distutils-example',
       # Packages to install in site-packages
       packages=['distutils-package'],
       # Data to be installed with package in site-packages.
-      package_data={'distutils-package':['data/*.txt']},
+      package_data={'distutils-package': ['data/*.txt']},
       # Install scripts. Will be install in bin/
       scripts=['script.py'],
       # Extra data files (install_dir relative to sys prefix, files)
