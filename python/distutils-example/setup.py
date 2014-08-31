@@ -19,8 +19,12 @@ setup(name='distutils-example',
       packages=['distutils-package'],
       # Data to be installed with package in site-packages.
       package_data={'distutils-package': ['data/*.txt']},
-      # Install scripts. Will be install in bin/
-      scripts=['script.py'],
+      # Create runnable commands
+      entry_points={
+          'console_scripts': [
+              'disutils_example = disutils_module:main',
+          ],
+      },
       # Extra data files (install_dir relative to sys prefix, files)
       data_files=[('data', ['data/extra.txt'])],
       )
