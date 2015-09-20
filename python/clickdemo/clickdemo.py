@@ -12,7 +12,23 @@ def cli(ctx):
 
 @cli.command()
 @click.option('--count', default=1, help='number of greetings')
+# Boolean option with "/"
+@click.option('--test/--no-test', default=False)
 @click.argument('name')
-def hello(count, name):
+def hello(count, test, name):
+    if test:
+        click.echo('Testing!')
     for x in range(count):
         click.echo('Hello %s!' % name)
+
+
+@cli.command()
+@click.option('--count', default=1, help='number of greetings')
+# Boolean option with "/"
+@click.option('--test/--no-test', default=False)
+@click.argument('name')
+def goodbye(count, test, name):
+    if test:
+        click.echo('Testing!')
+    for x in range(count):
+        click.echo('Goodbye %s!' % name)
