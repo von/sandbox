@@ -17,9 +17,9 @@ def cli(ctx, test):
 @cli.command()
 @click.option('--count', default=1, help='number of greetings')
 @click.argument('name')
-@click.pass_context
-def hello(ctx, count, name):
-    if ctx.obj["TEST"]:
+@click.pass_obj
+def hello(cfg, count, name):
+    if cfg["TEST"]:
         click.echo('Testing!')
     for x in range(count):
         click.echo('Hello %s!' % name)
@@ -28,9 +28,9 @@ def hello(ctx, count, name):
 @cli.command()
 @click.option('--count', default=1, help='number of greetings')
 @click.argument('name')
-@click.pass_context
-def goodbye(ctx, count, name):
-    if ctx.obj["TEST"]:
+@click.pass_obj
+def goodbye(cfg, count, name):
+    if cfg["TEST"]:
         click.echo('Testing!')
     for x in range(count):
         click.echo('Goodbye %s!' % name)
