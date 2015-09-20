@@ -2,8 +2,12 @@ import click
 
 
 @click.group(invoke_without_command=True)
+# Boolean option with "/"
+@click.option('--test/--no-test', default=False)
 @click.pass_context
-def cli(ctx):
+def cli(ctx, test):
+    ctx.obj = {}
+    ctx.obj["TEST"] = test
     if ctx.invoked_subcommand is None:
         click.echo('I was invoked without subcommand')
     else:
@@ -12,11 +16,10 @@ def cli(ctx):
 
 @cli.command()
 @click.option('--count', default=1, help='number of greetings')
-# Boolean option with "/"
-@click.option('--test/--no-test', default=False)
 @click.argument('name')
-def hello(count, test, name):
-    if test:
+@click.pass_context
+def hello(ctx, count, name):
+    if ctx.obj["TEST"]:
         click.echo('Testing!')
     for x in range(count):
         click.echo('Hello %s!' % name)
@@ -24,11 +27,10 @@ def hello(count, test, name):
 
 @cli.command()
 @click.option('--count', default=1, help='number of greetings')
-# Boolean option with "/"
-@click.option('--test/--no-test', default=False)
 @click.argument('name')
-def goodbye(count, test, name):
-    if test:
+@click.pass_context
+def goodbye(ctx, count, name):
+    if ctx.obj["TEST"]:
         click.echo('Testing!')
     for x in range(count):
         click.echo('Goodbye %s!' % name)
