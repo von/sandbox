@@ -24,19 +24,16 @@ def exception_catcher(type, value, tb):
     traceback.print_exception(type, value, tb)
     pdb.post_mortem(tb)
 
-sys.excepthook = exception_catcher
-
 
 # Output functions
-output = print
-debug = print
-
-
 def print_nothing(*arg):
     """Do nothing.
 
     Meant as replacement for print() when quiet is desired."""
     pass
+
+output = print
+debug = print_nothing
 
 
 def process(arg):
@@ -76,10 +73,13 @@ def main(argv=None):
                         ' (use "error" to trigger an error)')
     args = parser.parse_args()
 
-    global output
-    output = print if not args.quiet else print_nothing
-    global debug
-    debug = print if args.debug else print_nothing
+    if args.quiet:
+        global output
+        output = print_nothing
+    if args.debug:
+        global debug
+        debug = print
+        sys.excepthook = exception_catcher
 
     output("Processing arguments...")
     for arg in args.args:
