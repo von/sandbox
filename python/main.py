@@ -21,7 +21,7 @@ def exception_catcher(type, value, tb):
     """Handle uncaught exceptions
 
     Intended to be used for sys.excepthook"""
-    traceback.print_exc()
+    traceback.print_exception(type, value, tb)
     pdb.post_mortem(tb)
 
 sys.excepthook = exception_catcher
