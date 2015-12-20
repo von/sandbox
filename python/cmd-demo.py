@@ -6,6 +6,7 @@ import shlex
 import subprocess
 import sys
 
+
 class MyCmd(cmd.Cmd):
     prompt = "MyCmd> "
 
@@ -25,7 +26,9 @@ class MyCmd(cmd.Cmd):
     def do_ls(self, remainder):
         """List files"""
         retcode = subprocess.call(['ls'] + self._split(remainder))
-        return False
+        # XXX I'm not actually sure what the return value from a do_*
+        #     function does.
+        return False if retcode == 0 else True
 
     def do_quit(self, remainder):
         """Quit"""
@@ -46,6 +49,7 @@ class MyCmd(cmd.Cmd):
         """Split line into tokens handling quoted substrings"""
         return shlex.split(line)
 
+
 def main(argv=None):
     # Do argv default this way, as doing it in the functional
     # declaration sets it at compile time.
@@ -54,7 +58,7 @@ def main(argv=None):
 
     # Argument parsing
     parser = argparse.ArgumentParser(
-        description=__doc__, # printed with -h/--help
+        description=__doc__,  # printed with -h/--help
         # Don't mess with format of description
         formatter_class=argparse.RawDescriptionHelpFormatter,
         # To have --help print defaults with trade-off it changes
@@ -70,8 +74,8 @@ def main(argv=None):
                                  help="run quietly")
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
     parser.add_argument('args', metavar='args', type=str, nargs='*',
-                        help='some extra arguments' +\
-                            ' (use "error" to trigger an error)')
+                        help='some extra arguments' +
+                        ' (use "error" to trigger an error)')
     args = parser.parse_args()
 
     my_cmd = MyCmd()
