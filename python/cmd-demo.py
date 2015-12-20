@@ -73,15 +73,19 @@ def main(argv=None):
                                  action="store_true", default=False,
                                  help="run quietly")
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
+    parser.add_argument('cmd', metavar='command', type=str, nargs='?',
+                        help='Command ("help" to display list)')
     parser.add_argument('args', metavar='args', type=str, nargs='*',
-                        help='some extra arguments' +
-                        ' (use "error" to trigger an error)')
+                        help='Command arguments')
     args = parser.parse_args()
 
     my_cmd = MyCmd()
-    if args.args:
-        my_cmd.onecmd(args.args[0] +
-                      ' '.join('"{0}"'.format(arg) for arg in args.args[1:]))
+    if args.cmd:
+        # cmd doesn't handle quoted argument, so just join.
+        cmdstr = args.cmd
+        if args.args:
+            cmdstr += ' ' + ' '.join(args.args)
+        my_cmd.onecmd(cmdstr)
     else:
         my_cmd.cmdloop()
 
