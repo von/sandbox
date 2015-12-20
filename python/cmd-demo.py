@@ -75,7 +75,11 @@ def main(argv=None):
     args = parser.parse_args()
 
     my_cmd = MyCmd()
-    my_cmd.cmdloop()
+    if args.args:
+        my_cmd.onecmd(args.args[0] +
+                      ' '.join('"{0}"'.format(arg) for arg in args.args[1:]))
+    else:
+        my_cmd.cmdloop()
 
     return(0)
 
