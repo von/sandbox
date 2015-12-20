@@ -16,6 +16,8 @@ class MyCmd(cmd.Cmd):
 
     def do_EOF(self, remainder):
         """Handle EOF"""
+        # If a command handler returns a true value, the program
+        # will exit cleanly.
         return True
 
     def do_echo(self, remainder):
@@ -25,10 +27,8 @@ class MyCmd(cmd.Cmd):
 
     def do_ls(self, remainder):
         """List files"""
-        retcode = subprocess.call(['ls'] + self._split(remainder))
-        # XXX I'm not actually sure what the return value from a do_*
-        #     function does.
-        return False if retcode == 0 else True
+        subprocess.call(['ls'] + self._split(remainder))
+        return False
 
     def do_quit(self, remainder):
         """Quit"""
