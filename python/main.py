@@ -32,6 +32,13 @@ output = print
 debug = print
 
 
+def print_nothing(*arg):
+    """Do nothing.
+
+    Meant as replacement for print() when quiet is desired."""
+    pass
+
+
 def process(arg):
     """Print the given argument"""
     output("Argument: {}".format(arg))
@@ -70,9 +77,9 @@ def main(argv=None):
     args = parser.parse_args()
 
     global output
-    output = print if not args.quiet else lambda s: None
+    output = print if not args.quiet else print_nothing
     global debug
-    debug = print if args.debug else lambda s: None
+    debug = print if args.debug else print_nothing
 
     output("Processing arguments...")
     for arg in args.args:
