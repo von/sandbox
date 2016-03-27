@@ -6,6 +6,7 @@ See: http://www.doughellmann.com/PyMOTW/abc/index.html
 
 import abc
 
+
 #
 # Our abstract base class
 #
@@ -25,6 +26,7 @@ class Base(object):
 # A simple implementation
 #
 
+
 class Implementation(Base):
     def abstractmethod(self):
         """Implementation of abstract method"""
@@ -36,6 +38,7 @@ Implementation().abstractmethod()
 # An incomplete implementation throws a type error
 #
 
+
 class IncompleteImplementation(Base):
     pass
 
@@ -46,12 +49,13 @@ try:
 except TypeError:
     pass
 else:
-    print "Weird, creating an incomplete implementation didn't raise a TypeError"
+    print "Weird, creating an incomplete implementation "
+    "didn't raise a TypeError"
+
 
 #
 # An implementation with register()
 #
-
 class Implementation2:
     """Example of using register() to register implementation
 
@@ -72,6 +76,7 @@ except AttributeError:
 except:
     print "Weird, registered class seems to have inheritied..."
 
+
 #
 # Incomplete impementation with register()
 #
@@ -83,4 +88,3 @@ Base.register(IncompleteImplementation2)
 IncompleteImplementation2()
 
 print "Success."
-
