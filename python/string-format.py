@@ -44,3 +44,7 @@ class C:
 c = C()
 
 print "c: {:hello world}".format(c)
+
+# Formatting of named placeholders
+# Take i, right align (>), and pad with 0  to length 2
+print "{i:0>2}".format(i=3)
