@@ -48,7 +48,7 @@ class MyDecorator3(object):
             return new_function
         else:
             return function
-        
+
 @MyDecorator1
 def func1(msg):
     print "Inside func1({})".format(msg)
@@ -62,13 +62,13 @@ MyDecorator3.do_decoration(False)
 @MyDecorator3.decorate
 def func3(msg):
     print "Inside func3({})".format(msg)
-    
+
 MyDecorator3.do_decoration(True)
 
 @MyDecorator3.decorate
 def func4(msg):
     print "Inside func4({})".format(msg)
-    
+
 func1("Hello world")
 func2("Goodbye world")
 func3("Hello again")  # Should not be decorated
@@ -141,7 +141,7 @@ def class_decorator(cls):
     # so we have to explicitly name the attibutes here
     setattr(cls, "clsmethod", clsmethod)
     setattr(cls, "smethod", smethod)
-    
+
     return cls
 
 @class_decorator
