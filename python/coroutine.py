@@ -76,7 +76,7 @@ class generator_class(object):
 
         # 10 gets passed to __init__()
         # __iter__() just gets self
-        for i in generator_class(10): 
+        for i in generator_class(10):
             do_something(i)
         """
         return self
