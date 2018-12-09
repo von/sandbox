@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""coroutine and generator demonstration
+"""PEP-342 coroutine and generator demonstration
 
 Kudos: David Beazley http://www.dabeaz.com/coroutines/
 
@@ -8,6 +8,14 @@ a value to be passed to the coroutine by its send() method.
 
 Note that despite the fact coroutines and generators both use yield, don't
 confuse or mix them.
+
+Von conclusion about coroutines: they are a simple and specialized form of
+object with essentially one method (send) and intended to process input
+in a loop around a yield statment. They are of probably of some value
+if you have a use case for such, but not critical.
+
+Note that Python3 seems to have a more sophisticated coroutine implementation:
+    https://docs.python.org/3/library/asyncio-task.html
 """
 import sys
 
