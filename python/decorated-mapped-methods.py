@@ -8,6 +8,10 @@ Example does this with classes, this does it with functions.
 class Mapper(object):
     mappings = {}
 
+    # Decorator with arguments. Note this gets called twice, first with
+    # arguments and then with function to be wrapped. Hence it creates
+    # and returns a decorator.
+    # Kudos: https://speakerdeck.com/dabeaz/python-3-metaprogramming?slide=47
     @classmethod
     def register(cls, *names):
         """Create a mapping between decorated function and given names"""
