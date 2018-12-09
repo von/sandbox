@@ -19,6 +19,7 @@ class MyDecorator1(object):
 
 def MyDecorator2(function):
     """Exacmple of decorator using a function"""
+    # Lack of @wraps() here is intentional
     def new_function(*args, **kwargs):
         print "Calling decorated function {0.__name__}".format(function)
         function(*args, **kwargs)
