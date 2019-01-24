@@ -14,11 +14,11 @@ class MyContentHandler(xml.sax.ContentHandler):
         if name == "address":
             print("\tattribute type='" + attrs.getValue("type") + "'")
 
-        def endElement(self, name):
-            print("endElement '" + name + "'")
+    def endElement(self, name):
+        print("endElement '" + name + "'")
 
-        def characters(self, content):
-            print("characters '" + content + "'")
+    def characters(self, content):
+        print("characters '" + content + "'")
 
 
 def main(argv=None):
