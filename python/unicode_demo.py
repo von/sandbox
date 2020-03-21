@@ -3,7 +3,7 @@
 
 Kudos: http://farmdev.com/talks/unicode/"""
 
-# Unicode is a set of bytes 
+# Unicode is a set of bytes
 u = u'Ivan Krsti\u0107'
 
 # Unicode gets encoded to strings
@@ -24,4 +24,3 @@ Proposed solution by http://farmdev.com/talks/unicode/:
     Unicode everywhere
     Encode late
 """
-
