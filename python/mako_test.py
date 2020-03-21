@@ -1,5 +1,11 @@
 #!/usr/bin/env python
-"""Demonstration of Mako"""
+# -*- coding: utf-8 -*-
+"""Demonstration of Mako
+
+Unicode howto: https://docs.makotemplates.org/en/latest/unicode.html
+
+The 'coding' line above lets this file contain unicode characters.
+"""
 
 import mako  # pip install mako
 
@@ -9,7 +15,7 @@ template_string = """\
 
 ## A simple comment
 
-hello ${data}!
+hello ${data}, ${unicode_data}, and Ivan Krstić!
 
 ${"Stuff in brackets is evaluated by Python.".upper()}
 
@@ -42,5 +48,14 @@ Max is ${max}.
 %endfor
 """
 
-print Template(template_string).render(data="world")
-
+t = Template(template_string,
+             # Automaticlaly decode all expressions from unicode
+             # This lets parameters to render() contain unicode
+             # https://docs.makotemplates.org/en/latest/filtering.html
+             default_filters=['decode.utf8'],
+             # This lets the template_string contain unicode
+             input_encoding='utf-8',
+             # This lets the output be witten to a file
+             output_encoding='utf-8'
+             )
+print t.render(data="world", unicode_data="Ivan Krstić")
