@@ -2,6 +2,9 @@
 """Test query to Convergence Notary
 
 https://github.com/moxie0/Convergence/wiki/Notary-Protocol
+
+As of 2020-03, no longer working:
+ping: cannot resolve notary.thoughtcrime.org: Unknown host
 """
 
 import sys
