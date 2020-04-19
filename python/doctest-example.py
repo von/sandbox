@@ -26,7 +26,7 @@ class some_class(object):
 
     def generate(self):
         return self.value
- 
+
 if __name__ == "__main__":
     import doctest
     (failures, tests) = doctest.testmod(verbose=False)
