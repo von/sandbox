@@ -1,10 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Bit manipulation
 
 Kudos http://wiki.python.org/moin/BitManipulation
 """
 import sys
-from optparse import OptionParser
 
 class Bits(int):
     def bitCount(self):
@@ -31,9 +30,9 @@ class Bits(int):
 
     # setBit() returns an integer with the bit at 'offset' set to 1.
     def setBit(self, offset):
-        print self
+        print(self)
         self |= 1 << offset
-        print "post: %s" % self
+        print(f"post: {self}")
 
     # clearBit() returns an integer with the bit at 'offset' cleared.
     def clearBit(self, offset):
@@ -55,16 +54,16 @@ class Bits(int):
 
 def main(argv=None):
     binaryValue = '0011010100'
-    print "Value is %s" % binaryValue
+    print(f"Value is {binaryValue}")
     b = Bits(int(binaryValue, 2))
-    print "bitCount is %d" % b.bitCount()
-    print "lowestSet is %d" % b.lowestSet()
+    print(f"bitCount is {b.bitCount()}")
+    print(f"lowestSet is {b.lowestSet()}")
 
     b = Bits(0)
     b.setBit(4)
-    print "Value is %s" % b
-    print "bitCount is %d" % b.bitCount()
-    print "lowestSet is %d" % b.lowestSet()
+    print(f"Value is {b}")
+    print(f"bitCount is {b.bitCount()}")
+    print(f"lowestSet is {b.lowestSet()}")
 
 if __name__ == "__main__":
     sys.exit(main())

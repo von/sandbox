@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """An example python hashing application.
 
 %prog <file to hash>
@@ -28,8 +28,8 @@ def main(argv=None):
                 data = f.read(BLOCK_SIZE)
                 if not data:
                     break
-                hash.update(data)
-            print "%s: %s" % (filename, hash.hexdigest())
+                hash.update(data.encode("utf-8"))
+            print(f"{filename}: {hash.hexdigest()}")
     return 0
 
 if __name__ == "__main__":

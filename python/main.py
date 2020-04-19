@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """An example python application.
 
 This script docstring serves as a usage message (with -h).
@@ -7,7 +7,6 @@ Kudos: http://www.artima.com/weblogs/viewpost.jsp?thread=4829
 
 Modified to use argparse (new in 2.7) instead of getopt.
 """
-from __future__ import print_function  # So we can get at print()
 
 import argparse
 import pdb
@@ -38,7 +37,7 @@ debug = print_nothing
 
 def process(arg):
     """Print the given argument"""
-    output("Argument: {}".format(arg))
+    output(f"Argument: {arg}")
     # Allow command-line argument to create an error
     if arg == "error":
         return True

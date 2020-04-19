@@ -1,6 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """An example of subcommands with argparse """
-from __future__ import print_function  # So we can get at print()
 
 import argparse
 import sys

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """How to reraise a python exception and keep the original stacktrace
 and a modified message."""
 
@@ -27,7 +27,7 @@ class ExceptionHolder:
         exc_class, exc, tb = self.exc_info
         current_msg = str(exc) if exc else str(exc_class)
         new_exc = exc_class("Re-raised exception: " + current_msg)
-        raise exc_class, new_exc, tb
+        raise exc_class(new_exc).with_traceback(tb)
 
 
 eh = ExceptionHolder()

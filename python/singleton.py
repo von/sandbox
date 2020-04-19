@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Demonstrate singleton in python.
 
 Kudos: http://code.activestate.com/recipes/66531/#c22
@@ -17,6 +17,6 @@ class Singleton(object):
 
 a = Singleton()
 b = Singleton()
-print a
-print b
-print a==b
+print(a)
+print(b)
+print(a==b)

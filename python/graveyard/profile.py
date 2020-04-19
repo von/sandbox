@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Demonstrate use of profile and runctx() in particular.
 
 See http://docs.python.org/library/profile.html
@@ -29,7 +29,7 @@ def main(argv=None):
                       help="run quietly", default=False)
     (options, args) = parser.parse_args()
     if options.quiet:
-        print "Running quietly..."
+        print("Running quietly...")
     p = profileTester()
 
     # cProfile.run() will just use __main__ context instead of the calling

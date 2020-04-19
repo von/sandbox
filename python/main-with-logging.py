@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """An example python application.
 
 This script docstring serves as a usage message (with -h).
@@ -15,7 +15,7 @@ import sys
 
 def process(arg):
     """Print the given argument"""
-    print "Argument: {}".format(arg)
+    print("Argument: {arg}")
     # Allow command-line argument to create an error
     if arg == "error":
         return True

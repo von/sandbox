@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Examples of decorators"""
 
 from functools import wraps
@@ -13,17 +13,17 @@ class MyDecorator1(object):
         self.function = function
 
     def __call__(self, *args, **kwargs):
-        print "Calling decorated function {0.__name__}".format(self.function)
+        print(f"Calling decorated function {self.function.__name__}")
         self.function(*args, **kwargs)
-        print "Exiting decorated function {0.__name__}".format(self.function)
+        print(f"Exiting decorated function {self.function.__name__}")
 
 def MyDecorator2(function):
     """Exacmple of decorator using a function"""
     # Lack of @wraps() here is intentional
     def new_function(*args, **kwargs):
-        print "Calling decorated function {0.__name__}".format(function)
+        print(f"Calling decorated function {function.__name__}")
         function(*args, **kwargs)
-        print "Exiting decorated function {0.__name__}".format(function)
+        print(f"Exiting decorated function {function.__name__}")
     return new_function
 
 class MyDecorator3(object):
@@ -43,40 +43,40 @@ class MyDecorator3(object):
         if cls.decoration_on:
             @wraps(function)
             def new_function(*args, **kwargs):
-                print "Decoration!"
+                print("Decoration!")
                 function(*args, **kwargs)
-                print "End decoration!"
+                print("End decoration!")
             return new_function
         else:
             return function
 
 @MyDecorator1
 def func1(msg):
-    print "Inside func1({})".format(msg)
+    print(f"Inside func1({msg})")
 
 @MyDecorator2
 def func2(msg):
-    print "Inside func2({})".format(msg)
+    print(f"Inside func2({msg})")
 
 MyDecorator3.do_decoration(False)
 
 @MyDecorator3.decorate
 def func3(msg):
-    print "Inside func3({})".format(msg)
+    print(f"Inside func3({msg})")
 
 MyDecorator3.do_decoration(True)
 
 @MyDecorator3.decorate
 def func4(msg):
-    print "Inside func4({})".format(msg)
+    print(f"Inside func4({msg})")
 
 func1("Hello world")
 func2("Goodbye world")
 func3("Hello again")  # Should not be decorated
 func4("Goodbye again")
 
-print "Wrapped func2 without @wraps: {}".format(func2.__name__)
-print "Wrapped func4 with @wraps: {}".format(func4.__name__)
+print(f"Wrapped func2 without @wraps: {func2.__name__}")
+print(f"Wrapped func4 with @wraps: {func4.__name__}")
 
 ######################################################################
 
@@ -87,8 +87,8 @@ def add_method(instance):
     """
     def decorator(f):
         import types
-        f = types.MethodType(f, instance, instance.__class__)
-        setattr(instance, f.func_name, f)
+        f = types.MethodType(f, instance)
+        setattr(instance, f.__name__, f)
         return f
     return decorator
 
@@ -102,7 +102,7 @@ foo = Foo()
 def get_x(self):
     return self.x
 
-print "foo.get_x() = {}".format(foo.get_x())
+print(f"foo.get_x() = {foo.get_x()}")
 
 ######################################################################
 
@@ -124,12 +124,12 @@ def class_decorator(cls):
     # ismethod() doesn't work here, must use isfunction
     method_names = [name for name in cls.__dict__
                     if inspect.isfunction(cls.__dict__[name])]
-    mod_method_names = filter(lambda s: s.startswith("some"), method_names)
+    mod_method_names = [s for s in method_names if s.startswith("some")]
 
     def wrap_method(m):
         @wraps(m)
         def w(*args, **kwargs):
-            print "Wrapped method!"
+            print("Wrapped method!")
             m(*args, **kwargs)
         return w
 
@@ -158,9 +158,7 @@ class Test(object):
 
 t = Test()
 
-print "t.method() = {} t.clsmethod = {} t.smethod = {}".format(t.method(),
-                                                               t.clsmethod(),
-                                                               t.smethod())
+print(f"t.method() = {t.method()} t.clsmethod = {t.clsmethod()} t.smethod = {t.smethod()}")
 
 # Should print "Wrapped method!"
 t.some_method()

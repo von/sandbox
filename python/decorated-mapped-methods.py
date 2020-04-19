@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Demonstrate use of decorators to map methods to functions and methods.
 
 Kudos: http://www.scribd.com/doc/39946630/Python-Idioms (slides 9-10)
@@ -33,8 +33,8 @@ class Mapper(object):
 
 @Mapper.register("foo", "bar")
 def do_foo(*args, **kw):
-    print "do_foo() called."
-    print "Args: " + " ".join(args)
+    print("do_foo() called.")
+    print(f"Args: {' '.join(args)}")
 
 Mapper.get_by_name("foo")()
 Mapper.invoke_by_name("bar", "fie", "foe", "fum")

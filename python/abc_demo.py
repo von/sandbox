@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Demonstration of Python Abstract Base Classes
 
 See: http://www.doughellmann.com/PyMOTW/abc/index.html
@@ -10,9 +10,7 @@ import abc
 #
 # Our abstract base class
 #
-class Base(object):
-    __metaclass__ = abc.ABCMeta
-
+class Base(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def abstractmethod(self):
         """An abstract method that must be overridden"""
@@ -20,7 +18,7 @@ class Base(object):
 
     def do_something(self):
         """Abstract classes can non-abstract methods"""
-        print "I do something!"
+        print("I do something!")
 
 #
 # A simple implementation
@@ -49,7 +47,7 @@ try:
 except TypeError:
     pass
 else:
-    print "Weird, creating an incomplete implementation "
+    print("Weird, creating an incomplete implementation ")
     "didn't raise a TypeError"
 
 
@@ -66,15 +64,15 @@ class Implementation2:
 
 Base.register(Implementation2)
 # Will appear to be a subclass
-print 'Registered is subclass:', issubclass(Implementation2, Base)
-print 'Registered is instance:', isinstance(Implementation2(), Base)
+print('Registered is subclass:', issubclass(Implementation2, Base))
+print('Registered is instance:', isinstance(Implementation2(), Base))
 try:
     # But it doesn't actually inherit
     Implementation2().abstractmethod()
 except AttributeError:
     pass
 except:
-    print "Weird, registered class seems to have inheritied..."
+    print("Weird, registered class seems to have inheritied...")
 
 
 #
@@ -87,4 +85,4 @@ Base.register(IncompleteImplementation2)
 # But this doesn't see to raise any exception...
 IncompleteImplementation2()
 
-print "Success."
+print("Success.")

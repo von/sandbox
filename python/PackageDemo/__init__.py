@@ -21,13 +21,12 @@ class FooClass:
     "This is FooClass. It does nothing."""
     pass
 
-from SomeClass import SomeClass
+# Note with Python3 the use of "." is required
+# https://docs.python.org/3/tutorial/modules.html#intra-package-references
+from .SomeClass import SomeClass
 
 # Both FooClass and SomeClass can now be imported via PackageDemo
 
 # __path__ is set to a list containing a single element, that being
 # the path holding the package's __init__.py file.
 my_package_path = __path__[0]
-
-
-    

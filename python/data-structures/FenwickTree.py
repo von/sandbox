@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import unittest
 
 class FenwickTree:
@@ -8,11 +8,11 @@ class FenwickTree:
     Full dececription and much of this code based on:
     http://www.topcoder.com/tc?module=Static&d1=tutorials&d2=binaryIndexedTrees
     """
-    
+
     # One trick used in this class is "index & -index" what this does
     # is to return a number that has only one bit set, that being the
     # lowest bit set in index. Here's why it works, think of index as
-    # a10...0, that is some bitstring 'a' followed by a 1 and then some number 
+    # a10...0, that is some bitstring 'a' followed by a 1 and then some number
     # of bits of value 0. -index would be ~index+1 or ~(a10...0) + 1
     # or ~a~1~0..0+1 or ~a01..1+1 or ~a10..0, so:
     # index & -index == a10..0 & ~a10..0 or 010..0
@@ -70,7 +70,7 @@ class FenwickTree:
 
     def scale(self, multiplier):
         """Scale all frequency counts by multiplier."""
-        for i in xrange(1, self.maxValue):
+        for i in range(1, self.maxValue):
             self.tree[i] *= multiplier
 
     def dump(self):
@@ -130,4 +130,3 @@ class FenwickTreeTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

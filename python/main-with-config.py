@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """An example python application.
 
 This allow for specification of a configuration file that can be
@@ -13,7 +13,7 @@ Modified to using logging for output.
 Modified to read configuration file for defaults.
 """
 import argparse
-import ConfigParser
+import configparser
 import logging
 import logging.config
 import sys
@@ -21,7 +21,7 @@ import sys
 
 def process(arg):
     """Print the given argument"""
-    print "Argument: {}".format(arg)
+    print(f"Argument: {arg}")
     # Allow command-line argument to create an error
     if arg == "error":
         return True
@@ -53,7 +53,7 @@ def parse_args(argv):
             # ((section, option), option)
             (("Defaults", "option"), "option")
         ]
-        config = ConfigParser.SafeConfigParser()
+        config = configparser.ConfigParser()
         config.read([args.conf_file])
         for sec_opt, option in conf_mappings:
             if config.has_option(*sec_opt):

@@ -3,6 +3,7 @@
 
 Kudos: David Beazley's Mastering Python3 I/O
 """
+# Needed for Python2
 from __future__ import print_function
 
 import argparse

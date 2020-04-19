@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Demonstrate use of property()
 
@@ -33,14 +33,19 @@ class Foo:
 def main():
     f = Foo(4)
     assert(f.value2 == 8)
-    f.value2 = 5     # This will override value2() method
-    assert(f.value2 == 5)
+    # In Python2 the following works, but in Python3 it raises
+    # an AttributeError
+    try:
+        f.value2 = 5     # This will override value2() method
+    except AttributeError:
+        assert(f.value2 == 8)
+    else:
+        assert(f.value2 == 5)
     assert(f.value3 == 4)
     f.value3 = 6
     assert(f.value3 == 6)
-    print help(Foo)
     del(f.value3)
-    print "Success."
+    print("Success.")
     return 0
 
 if __name__ == "__main__":

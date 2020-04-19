@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """An example of the cmd module"""
 import argparse
 import cmd
@@ -12,7 +12,7 @@ class MyCmd(cmd.Cmd):
 
     def default(self, line):
         """Called for unrecognizted command."""
-        print "Unrecognized: " + line
+        print("Unrecognized: " + line)
 
     def do_EOF(self, remainder):
         """Handle EOF"""
@@ -22,7 +22,7 @@ class MyCmd(cmd.Cmd):
 
     def do_echo(self, remainder):
         """Echo arguments"""
-        print remainder
+        print(remainder)
         return False
 
     def do_ls(self, remainder):
@@ -37,7 +37,7 @@ class MyCmd(cmd.Cmd):
     def do_split(self, remainder):
         """Split and echo arguments"""
         args = self._split(remainder)
-        print ",".join(args)
+        print(",".join(args))
         return False
 
     def postcmd(self, stop, line):

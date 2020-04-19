@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Playing around with the multiprocessing module.
 """
 import argparse
@@ -10,7 +10,7 @@ import sys
 def squarer(n):
     """Return the square of the given argument"""
     square = n*n
-    print "Process {} squared {} to {}".format(os.getpid(), n, square)
+    print(f"Process {os.getpid()} squared {n} to {square}")
     return square
 
 def square_array_pipe(p):
@@ -66,35 +66,35 @@ def main(argv=None):
         file_handler = logging.FileHandler(args.log_file)
         file_handler.setFormatter(logging.Formatter("%(asctime)s:%(message)s"))
         output.addHandler(file_handler)
-        output.debug("Logging to file {}".format(args.log_file))
+        output.debug(f"Logging to file {args.log_file}")
 
-    output.info("Creating pool with {} processes".format(args.num_processes))
+    output.info(f"Creating pool with {args.num_processes} processes")
     pool = multiprocessing.Pool(processes=args.num_processes)
     output.info("Spawning a map across processes")
-    pool.map(squarer, range(10))
+    pool.map(squarer, list(range(10)))
     output.info("Pool map completed")
 
     output.info("Sending array to process via pipe to be squared")
-    a = range(10)
-    print "Array: {}".format(a)
+    a = list(range(10))
+    print(f"Array: {a}")
     parent_pipe, child_pipe = multiprocessing.Pipe()
     p = multiprocessing.Process(target=square_array_pipe, args=[child_pipe])
     parent_pipe.send(a)
     p.start()
     result = parent_pipe.recv()
     p.join()
-    print "Result: {}".format(result)
+    print(f"Result: {result}")
 
     output.info("Reading squared array from process via queue")
-    a = range(10)
-    print "Array: {}".format(a)
+    a = list(range(10))
+    print(f"Array: {a}")
     q = multiprocessing.Queue()
     p = multiprocessing.Process(target=square_array_queue, args=[q, a])
     p.start()
     while True:
         result = q.get()
         if result is not None:
-            print "Result: {}".format(result)
+            print(f"Result: {result}")
         else:
             break
     p.join()

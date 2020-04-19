@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Show how to call method based on a string mapping
 
 See decorated-mapped-methods.py for a way to do this with decorators"""
@@ -8,13 +8,13 @@ class A:
         self.MAPPINGS[value](self)
 
     def foo(self):
-        print "foo"
+        print("foo")
 
     def bar(self):
-        print "bar"
+        print("bar")
 
     def foobar(self):
-        print "foobar"
+        print("foobar")
 
     MAPPINGS = {
         1 : foo,
@@ -25,4 +25,3 @@ class A:
 A(1)
 A(2)
 A(3)
-

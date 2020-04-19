@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Exploring python's 'with'
 
 Kudos:
@@ -18,14 +18,14 @@ import traceback
 
 class with_example:
     def hello(self):
-        print "Hello world"
+        print("Hello world")
 
     def __enter__(self):
-        print "Entering with block..."
+        print("Entering with block...")
         return self
 
     def __exit__(self, type, value, traceback):
-        print "Exiting with block..."
+        print("Exiting with block...")
 
 with with_example() as thing:
     thing.hello()
@@ -34,53 +34,53 @@ with with_example() as thing:
 
 @contextmanager
 def context_manager_example():
-    print "Entering context manager..."
+    print("Entering context manager...")
     yield "World"
-    print "Exiting context manager..."
+    print("Exiting context manager...")
 
 with context_manager_example() as noun:
-    print "Hello {}".format(noun)
+    print("Hello {}".format(noun))
 
 #
 # This block from:
 # http://www.doughellmann.com/PyMOTW/contextlib/
 @contextmanager
 def make_context():
-    print '  entering'
+    print('  entering')
     try:
         yield {}
-    except RuntimeError, err:
-        print '  ERROR:', err
+    except RuntimeError as err:
+        print('  ERROR:', err)
     finally:
-        print '  exiting'
+        print('  exiting')
 
-print 'Normal:'
+print('Normal:')
 with make_context() as value:
-    print '  inside with statement:', value
+    print('  inside with statement:', value)
 
-print
-print 'Handled error:'
+print()
+print('Handled error:')
 with make_context() as value:
     raise RuntimeError('showing example of handling an error')
 
-print
-print 'Unhandled error:'
+print()
+print('Unhandled error:')
 try:
     with make_context() as value:
         raise ValueError('this exception is not handled')
-except ValueError, e:
-    print "ValueError not handled as expected: {}".format(e)
+except ValueError as e:
+    print("ValueError not handled as expected: {}".format(e))
 
-print """
+print("""
 ######################################################################
-"""
+""")
 
 class stdout_to_pipe(object):
     def __enter__(self):
         self.saved_stdout = sys.stdout
         read_fd, write_fd = os.pipe()
         reader = os.fdopen(read_fd)
-        writer = os.fdopen(write_fd, "w", 0)  # 0 == unbuffered
+        writer = os.fdopen(write_fd, "w", buffering=1) # line buffering
         sys.stdout = writer
         return reader
 
@@ -92,7 +92,7 @@ class pipe_to_stdin(object):
         self.saved_stdin = sys.stdin
         read_fd, write_fd = os.pipe()
         reader = os.fdopen(read_fd)
-        writer = os.fdopen(write_fd, "w", 0)  # 0 == unbuffered
+        writer = os.fdopen(write_fd, "w", buffering=1) # line buffering
         sys.stdin = reader
         return writer
 
@@ -100,20 +100,20 @@ class pipe_to_stdin(object):
         sys.stdin = self.saved_stdin
 
 with stdout_to_pipe() as out:
-    print "Hello from stdout_as_pipe()!"
+    print("Hello from stdout_as_pipe()!")
     a = out.readline()
 
-print "Captured output: " + a
+print("Captured output: " + a)
 
 with pipe_to_stdin() as input:
     input.write("Hello world!\n")
-    print "Captured input: " + sys.stdin.readline()
+    print("Captured input: " + sys.stdin.readline())
 
-print """
+print("""
 ######################################################################
 #
 # Modify an exception
-"""
+""")
 
 class ExceptionModifier:
     """Change any IOError to ValueError"""
@@ -126,22 +126,22 @@ class ExceptionModifier:
             # information, but with new class.  Note that one
             # cannot hide the current line from the traceback. See
             # http://stackoverflow.com/questions/6410764/raising-exceptions-without-raise-in-the-traceback
-            raise ValueError, value
+            raise ValueError(value)
         return False  # handler should reraise exception
 
 try:
     with ExceptionModifier():
         raise IOError("Raising IO Error")
 except ValueError as e:
-    print "Caught ValueError as expected:", e
+    print("Caught ValueError as expected:", e)
     traceback.print_exc()
 
 try:
     with ExceptionModifier():
         raise SyntaxError("Raising Syntax Error")
 except SyntaxError as e:
-    print "Caught SyntaxError as expected", e
+    print("Caught SyntaxError as expected", e)
 
-print "Done."
+print("Done.")
 sys.exit(0)
 

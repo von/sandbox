@@ -1,14 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 try:
     import foo
-except ImportError, e:
-    print "Import of foo failed: %s" % e
+except ImportError as e:
+    print(f"Import of foo failed: {e}")
 
 try:
     import os
-except  ImportError, e:
-    print "Import of os failed."
+except  ImportError as e:
+    print("Import of os failed.")
 
-print "Successfully imported 'os'"
-print "Process pid is %d" % os.getpid()
+print("Successfully imported 'os'")
+print(f"Process pid is {os.getpid()}")

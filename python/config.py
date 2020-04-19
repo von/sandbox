@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """ConfigParser.py
 
 Demonstrate ConfigParser module
 """
-from ConfigParser import SafeConfigParser
+from configparser import ConfigParser
 import sys
 from optparse import OptionParser
 
@@ -21,13 +21,13 @@ def main(argv=None):
     parser.set_defaults(confpath="config.conf")
     (options, args) = parser.parse_args()
 
-    print "Reading %s" % options.confpath
-    config = SafeConfigParser()
+    print(f"Reading {options.confpath}")
+    config = ConfigParser()
     config.read(options.confpath)
     for section in config.sections():
-        print "[%s]" % section
+        print(f"[{section}]")
         for option in config.options(section):
-            print option
+            print(option)
 
 if __name__ == "__main__":
     sys.exit(main())

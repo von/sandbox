@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Demonstrate overriding of Formatter""" 
 
 import argparse
@@ -17,7 +17,7 @@ class MyFormatter(string.Formatter):
         }
 
     def get_value(self, key, args, kwargs):
-        if self.intercepts.has_key(key):
+        if key in self.intercepts:
             return self.intercepts[key]()
         return string.Formatter.get_value(self, key, args, kwargs)
 
@@ -28,7 +28,7 @@ def main(argv=None):
         argv = sys.argv
 
     f = MyFormatter()
-    print f.format("This {var} a {foo} test {1}", "real", "world", var="IS")
+    print(f.format("This {var} a {foo} test {1}", "real", "world", var="IS"))
     return(0)
 
 if __name__ == "__main__":

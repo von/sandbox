@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Kudos:
 # http://www.saltycrane.com/blog/2010/02/python-setdefault-example/
 
@@ -10,15 +10,15 @@ DATA_SOURCE = (('key1', 'value1'),
 
 newdata = {}
 for k, v in DATA_SOURCE:
-    if newdata.has_key(k):
+    if k in newdata:
         newdata[k].append(v)
     else:
         newdata[k] = [v]
-print newdata
+print(newdata)
 
 # This will return same as above.
 
 newdata = {}
 for k, v in DATA_SOURCE:
     newdata.setdefault(k, []).append(v)
-print newdata
+print(newdata)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 def some_function(i):
     """Given an integer, add 5 to it.
@@ -30,5 +30,5 @@ class some_class(object):
 if __name__ == "__main__":
     import doctest
     (failures, tests) = doctest.testmod(verbose=False)
-    print "{} tests ran with {} failures".format(tests, failures)
+    print(f"{tests} tests ran with {failures} failures")
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import curses
 import os
 
@@ -19,10 +19,13 @@ def main(stdscr):
     win2.refresh()
     stdscr.getch()
     ls = os.popen("ls")
-    for line in ls:
-	print len(line)
-	win2.addstr(line)
-	win2.refresh()
+    for i,line in enumerate(ls):
+        try:
+            win2.addstr(i, 0, line.encode("utf-8"))
+        except curses.error:
+            # Assume we've hit the end of the window
+            break
+    win2.refresh()
     stdscr.getch()
 
 curses.wrapper(main)

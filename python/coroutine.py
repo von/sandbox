@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """PEP-342 coroutine and generator demonstration
 
 Kudos: David Beazley http://www.dabeaz.com/coroutines/
@@ -23,7 +23,7 @@ def coroutine(func):
     """Function decorator priming a coroutine by calling next() once automatically"""
     def start(*args,**kwargs):
         cr = func(*args,**kwargs)
-        cr.next()
+        next(cr)
         return cr
     return start
 
@@ -89,7 +89,7 @@ class generator_class(object):
         """
         return self
 
-    def next(self):
+    def __next__(self):
         self.count += 1
         if self.count > self.max:
             raise StopIteration
@@ -110,7 +110,7 @@ def printer(prefix):
     """A coroutine that prints its input with the given prefix."""
     while True:
         line = (yield)
-        print prefix, line.rstrip()
+        print(prefix, line.rstrip())
 
 def send_generator_to_coroutine(generator, target):
     """Send output from the given generator to the given coroutine.
@@ -122,9 +122,9 @@ def send_generator_to_coroutine(generator, target):
 def main(argv=None):
     if argv is None:
         argv = sys.argv
-    print "Sending my source code to grep('while') and then printer()..."
+    print("Sending my source code to grep('while') and then printer()...")
     # Take one with file as generator
-    with file(argv[0]) as f:
+    with open(argv[0]) as f:
         g = send_generator_to_coroutine(f, grep("while", printer("My output:")))
     # Take two, building pipe slowly and using generator function
     p = printer("Second output:")
@@ -140,20 +140,20 @@ def main(argv=None):
     # Take four, with coroutine_example()
     cr = coroutine_example(starting_sum=7)
     # The following line could be send(None) as well.
-    s = cr.next()  # Will yield sum from first time in loop.
-    print "Starting value: {}".format(s)
+    s = next(cr)  # Will yield sum from first time in loop.
+    print(f"Starting value: {s}")
     for i in range(10):
         sum = cr.send(i)
-        print sum
+        print(sum)
 
     # Take four, with coroutine_example2()
     cr2 = coroutine_example2(starting_sum=13)
-    s = cr2.next()
-    print "Starting value: {}".format(s)
+    s = next(cr2)
+    print(f"Starting value: {s}")
     for i in range(10):
         sum = cr2.send(i)
-        print sum
-    print "Done."
+        print(sum)
+    print("Done.")
 
 if __name__ == "__main__":
     sys.exit(main())

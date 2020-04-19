@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Show use of callbacks from one call to another."""
 
 class One:
@@ -7,7 +7,7 @@ class One:
         t.doit()
 
     def callback(self, value):
-        print "Callback invoked with value = %s" % value
+        print(f"Callback invoked with value = {value}")
 
 class Two:
     def __init__(self, callback):

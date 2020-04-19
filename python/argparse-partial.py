@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Demonstrate how to use argparse.parse_known_options()
 
 In this case, we use it to allow a configuration file to specify default
@@ -12,7 +12,7 @@ Option is default
 
 Default from configuration file:
 
-$ ./argparse-partial.py -c argparse-partial.config 
+$ ./argparse-partial.py -c argparse-partial.config
 Configuration file is argparse-partial.config
 Option from config is Hello world!
 Option is Hello world!
@@ -25,7 +25,7 @@ Option from config is Hello world!
 Option is override
 """
 import argparse
-import ConfigParser
+import configparser
 import sys
 
 def main(argv=None):
@@ -51,15 +51,15 @@ def main(argv=None):
         "option" : "default"
         }
     if args.conf_file:
-        print "Configuration file is {}".format(args.conf_file)
-        config = ConfigParser.SafeConfigParser()
+        print(f"Configuration file is {args.conf_file}")
+        config = configparser.SafeConfigParser()
         config.read([args.conf_file])
         if config.has_option("Defaults", "option"):
             value = config.get("Defaults", "option")
-            print "Option from config is {}".format(value)
+            print(f"Option from config is {value}")
             defaults["option"] = value
     else:
-        print "No configuration file specified."
+        print("No configuration file specified.")
 
     # Parse rest of arguments
     # Don't surpress add_help here so it will handle -h
@@ -70,7 +70,7 @@ def main(argv=None):
     parser.set_defaults(**defaults)
     parser.add_argument("--option")
     args = parser.parse_args(remaining_argv)
-    print "Option is {}".format(args.option)
+    print(f"Option is {args.option}")
     return(0)
 
 if __name__ == "__main__":

@@ -3,4 +3,4 @@
 
 class MyClass:
     def doit(self):
-        print "MyClass.doit()"
+        print("MyClass.doit()")

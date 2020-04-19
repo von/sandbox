@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Simple demonstration of class variables
 
 %prog
@@ -32,12 +32,12 @@ def main(argv=None):
     (options, args) = parser.parse_args()
     c = Class()
     c2 = Class()
-    print "These will be the same:"
-    print "%d" % c.increment_var1()
-    print "%d" % c2.increment_var1()
-    print "These will be different:"
-    print "%d" % c.increment_var2()
-    print "%d" % c2.increment_var2()
+    print("These will be the same:")
+    print(c.increment_var1())
+    print(c2.increment_var1())
+    print("These will be different:")
+    print(c.increment_var2())
+    print(c2.increment_var2())
 
 if __name__ == "__main__":
     sys.exit(main())

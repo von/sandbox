@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import unittest
 
 class HeapList(list):
@@ -85,7 +85,7 @@ class HeapList(list):
         If size is not None, specifies size of heap, otherwise len(self) is used."""
         if size: assert(size > len(self))
         self._size = size
-        for i in xrange(self.size()/2, -1, -1):
+        for i in range(int(self.size()/2), -1, -1):
             self.heapify(i)
 
     def check(self, i=0):
@@ -105,7 +105,7 @@ class HeapList(list):
         Assumes heap is legal."""
         saveSize = self._size
         if not self._size: self._size = len(self)
-        for i in xrange(self.size() - 1, 0, -1):
+        for i in range(self.size() - 1, 0, -1):
             # Move largest element to last position
             self.swap(0, i)
             # Remove last position from heap
@@ -115,28 +115,28 @@ class HeapList(list):
         self._size = saveSize
 
 class HeapListTests(unittest.TestCase):
-    
+
     def testinit(self):
         heap = HeapList()
         self.assertEqual(heap.size(), 0)
-        heap = HeapList(range(7))
+        heap = HeapList(list(range(7)))
         self.assertEqual(heap.size(), 7)
-        
+
     def testleft(self):
-        heap = HeapList(range(6))
+        heap = HeapList(list(range(6)))
         self.assertEqual(heap.left(0),1)
         self.assertEqual(heap.left(1),3)
         self.assertEqual(heap.left(2),5)
         self.assertEqual(heap.left(3),None)
 
     def testright(self):
-        heap = HeapList(range(6))
+        heap = HeapList(list(range(6)))
         self.assertEqual(heap.right(0),2)
         self.assertEqual(heap.right(1),4)
         self.assertEqual(heap.right(2),None)
 
     def testparent(self):
-        heap = HeapList(range(6))
+        heap = HeapList(list(range(6)))
         self.assertEqual(heap.parent(0),None)
         self.assertEqual(heap.parent(1),0)
         self.assertEqual(heap.parent(2),0)
@@ -145,24 +145,24 @@ class HeapListTests(unittest.TestCase):
         self.assertEqual(heap.parent(5),2)
 
     def testheight(self):
-        heap = HeapList(range(1))
+        heap = HeapList(list(range(1)))
         self.assertEqual(heap.height(), 0)
-        heap = HeapList(range(2))
+        heap = HeapList(list(range(2)))
         self.assertEqual(heap.height(), 1)
-        heap = HeapList(range(6))
+        heap = HeapList(list(range(6)))
         self.assertEqual(heap.height(), 2)
-        heap = HeapList(range(45))
+        heap = HeapList(list(range(45)))
         self.assertEqual(heap.height(), 5)
 
     def testswap(self):
-        heap = HeapList(range(5))
+        heap = HeapList(list(range(5)))
         heap.swap(0,1)
         self.assertEqual(heap[0], 1)
         self.assertEqual(heap[1], 0)
         heap.swap(1,2)
         self.assertEqual(heap[2], 0)
         self.assertEqual(heap[1], 2)
-        
+
     def testadd(self):
         heap = HeapList([20-2*i for i in range(4)])
         heap.add(19)
@@ -179,26 +179,26 @@ class HeapListTests(unittest.TestCase):
         self.assertEqual(heap[3], 10)
 
     def testcheck(self):
-        heap = HeapList(range(10))
+        heap = HeapList(list(range(10)))
         self.assertFalse(heap.check())
         heap = HeapList([20-i for i in range(20)])
         self.assertTrue(heap.check())
 
     def testbuild(self):
         from random import shuffle
-        heap = HeapList(range(100))
+        heap = HeapList(list(range(100)))
         shuffle(heap)
         heap.build()
         self.assertTrue(heap.check())
 
     def testsort(self):
         from random import shuffle
-        heap = HeapList(range(100))
+        heap = HeapList(list(range(100)))
         shuffle(heap)
         heap.build()
         self.assertTrue(heap.check())
         heap.sort()
-        for i in xrange(heap.size()-1):
+        for i in range(heap.size()-1):
             self.assertTrue(heap[i] < heap[i+1])
 
 if __name__ == '__main__':

@@ -154,7 +154,7 @@ def main(argv=None):
     server_thread = threading.Thread(target=server.handle_request)
     server_thread.setDaemon(True)
     server_thread.start()
-    
+
     client(ip, port, server.queue)
     return(0)
 

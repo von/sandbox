@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Demonstration script for PackageDemo."""
 import argparse
 import logging
@@ -41,18 +41,18 @@ def main(argv=None):
 
     output.info("Importing PackageDemo.FooClass")
     from PackageDemo import FooClass
-    print FooClass.__doc__
+    print(FooClass.__doc__)
     foo = FooClass
 
     output.info("Importing PackageDemo.SomeClass")
     from PackageDemo import SomeClass
-    print SomeClass.__doc__
+    print(SomeClass.__doc__)
     some = SomeClass
 
     output.info("Getting package path")
     from PackageDemo import my_package_path
-    print "Package path is:", my_package_path
-                
+    print(f"Package path is: {my_package_path}")
+
     output.info("That's all")
     return(0)
 

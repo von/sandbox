@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 # Kudos: http://www.knowthytools.com/2010/03/sax-parsing-with-python.html
 
 import sys
@@ -10,19 +9,19 @@ class MyContentHandler(xml.sax.ContentHandler):
         xml.sax.ContentHandler.__init__(self)
 
     def startElement(self, name, attrs):
-        print("startElement '" + name + "'")
+        print(f"startElement '{name}'")
         if name == "address":
-            print("\tattribute type='" + attrs.getValue("type") + "'")
+            print(f"\tattribute type='{attrs.getValue('type')}'")
 
     def endElement(self, name):
-        print("endElement '" + name + "'")
+        print(f"endElement '{name}'")
 
     def characters(self, content):
-        print("characters '" + content + "'")
+        print(f"characters '{content}'")
 
 
 def main(argv=None):
-    source = open("xml-sax.xml")
+    source = open("test.xml")
     xml.sax.parse(source, MyContentHandler())
     return(0)
 

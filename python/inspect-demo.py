@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Demonstration of python inspect module (and a little bit of traceback).
 
 http://blog.doughellmann.com/2007/11/pymotw-inspect.html
@@ -41,13 +41,13 @@ def print_frame(frame):
     # A tuple of five things is returned: the filename, the line number of
     # the current line, the function name, a list of lines of context from
     # the source code, and the index of the current line within that list.
-    print "  Frame: Function: {0.function} in {0.filename} line {0.lineno}"\
-        .format(frameinfo)
+    print("  Frame: Function: {0.function} in {0.filename} line {0.lineno}"\
+        .format(frameinfo))
     if frameinfo.code_context is not None:
-        print "    ",frameinfo.code_context[0],
+        print("    ",frameinfo.code_context[0], end=' ')
     else:
-        print "    Looks like an eval() call",\
-            "but I don't know how to get at more information"
+        print("    Looks like an eval() call",\
+            "but I don't know how to get at more information")
 
 def print_traceback(tb):
     """Print a traceback from inside an exception handler.
@@ -61,28 +61,28 @@ def print_traceback(tb):
         print_frame(tb.tb_frame)
         # Traceback is linked list, with tb_next being the link
         tb = tb.tb_next
-    print "Inner frames (the trace()):"
+    print("Inner frames (the trace()):")
     print_records(inner_frames)
-    print "Outer frames (the stack()):"
+    print("Outer frames (the stack()):")
     print_records(outer_frames)
 
 def print_function(function):
-    spec = inspect.getargspec(function)
-    print "Constructed piecemeal:"
-    print inspect.getcomments(function),
-    print "def {}({}, *{}, **{}):".format(
+    spec = inspect.getfullargspec(function)
+    print("Constructed piecemeal:")
+    print(inspect.getcomments(function), end=' ')
+    print("def {}({}, *{}, **{}):".format(
         function.__name__,
         args_to_string(spec.args, spec.defaults),
         spec.varargs,
-        spec.keywords)  # Not varkw as in documentation
-    print "    \"\"\"{}\"\"\"".format(inspect.getdoc(function))
-    print "\nOr using formatargspec():"
-    print "def {}{}:".format(
+        spec.varkw))
+    print("    \"\"\"{}\"\"\"".format(inspect.getdoc(function)))
+    print("\nOr using formatargspec():")
+    print("def {}{}:".format(
         function.__name__,
         inspect.formatargspec(spec.args, spec.varargs,
-                              spec.keywords, spec.defaults))
-    print "\nOr in one call with getsource():"
-    print inspect.getsource(function)
+                              spec.varkw, spec.defaults)))
+    print("\nOr in one call with getsource():")
+    print(inspect.getsource(function))
 
 def args_to_string(args, defaults=()):
     """Convert a set of argument names and default values to a string
@@ -115,9 +115,7 @@ def exception_changer(function, *args, **kwargs):
     except Exception as ex:
         # Re-raise exception as ValueError with modified message and same
         # traceback as original exception.
-        raise WeirdException, \
-            "Modified message:" + ex.message + "!", \
-            sys.exc_info()[2]
+        raise WeirdException("Modified message:" + ex.message + "!").with_traceback(sys.exc_info()[2])
 
 def exception_changing_decorator(function):
     """Change all exceptions from the wrapped function to WeirdException"""
@@ -126,7 +124,7 @@ def exception_changing_decorator(function):
         try:
             function(*args, **kwargs)
         except Exception as e:
-            raise WeirdException, e.message, sys.exc_info()[2]
+            raise WeirdException(e).with_traceback(sys.exc_info()[2])
             # Use 'raise' to just reraise exception without altering it.
     return f
 
@@ -154,49 +152,49 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv
 
-    print DIV
-    print "Part One: stack() and trace() demonstrations\n"
-    print "Printing stack() from inside main():"
+    print(DIV)
+    print("Part One: stack() and trace() demonstrations\n")
+    print("Printing stack() from inside main():")
     print_records(inspect.stack())
-    print "Printing trace() from inside main(): (will be empty)"
+    print("Printing trace() from inside main(): (will be empty)")
     print_records(inspect.trace())
 
     try:
         eval("raise_exception()")
     except Exception as ex:
-        print "\nTraceback from inside exception handler:"
+        print("\nTraceback from inside exception handler:")
         print_traceback(sys.exc_info()[2])
-        print DIV
-        print "Printing stack() from inside exception handler:"
+        print(DIV)
+        print("Printing stack() from inside exception handler:")
         print_records(inspect.stack())
-        print "\nPrinting trace() from inside exception handler:"
-        print "    (Will be the almost the same as traceback)"
+        print("\nPrinting trace() from inside exception handler:")
+        print("    (Will be the almost the same as traceback)")
         print_records(inspect.trace())
 
-    print DIV
-    print "Part two: inspect a function.\n"
+    print(DIV)
+    print("Part two: inspect a function.\n")
     print_function(demo_function)
 
-    print DIV
-    print "Part three: modifying an exception"
-    print "    (Really nothing to do with inspect directly)\n"
+    print(DIV)
+    print("Part three: modifying an exception")
+    print("    (Really nothing to do with inspect directly)\n")
     try:
         exception_changer(raise_exception)
     except Exception as ex:
         traceback.print_exc()
 
 
-    print "\nNow using a decorator:"
+    print("\nNow using a decorator:")
     try:
         exception_raiser_two()
     except Exception as ex:
         traceback.print_exc()
 
-    print DIV
-    print "Demonstrate returning the docstring of a caller.\n"
-    print "My docstring is: ", get_docstring()
-    
-    print "\n\nThat's all folks.\n"
+    print(DIV)
+    print("Demonstrate returning the docstring of a caller.\n")
+    print("My docstring is: ", get_docstring())
+
+    print("\n\nThat's all folks.\n")
 
 if __name__ == "__main__":
     try:
