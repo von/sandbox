@@ -1,0 +1,21 @@
+Following directions at:
+
+https://www.hanselman.com/blog/EasilyRenameYourGitDefaultBranchFromMasterToMain.aspx
+
+$ git branch -m master main
+$ git push -u origin main
+
+Then change default branch on Github by visiting:
+
+https://github.com/von/<repo>/settings/branches
+
+Select 'main' and 'Update'
+
+To handle another clone: [Unverified]
+
+$ git checkout master
+$ git branch -m master main
+$ git fetch
+$ git branch --unset-upstream
+$ git branch -u origin/main
+$ git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
