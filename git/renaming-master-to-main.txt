@@ -1,9 +1,11 @@
 Following directions at:
 
 https://www.hanselman.com/blog/EasilyRenameYourGitDefaultBranchFromMasterToMain.aspx
+https://stackoverflow.com/a/8762728/197789
 
 $ git branch -m master main
 $ git push -u origin main
+$ git push --delete origin master
 
 Then change default branch on Github by visiting:
 
