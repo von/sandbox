@@ -15,6 +15,16 @@ if not result then
   print("f1() failed as expected: " .. err)
 end
 
+-- Use xpcall() to get stack trace
+-- Kudos: https://stackoverflow.com/a/45788987/197789
+function f1wrapper(...)
+  f1(...)
+end
+
+result, err = xpcall(f1wrapper, debug.traceback, "Alas")
+
+print("f1wrapper() trace: " .. err)
+
 function f2()
   return "Hello world"
 end
