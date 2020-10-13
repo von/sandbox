@@ -40,3 +40,38 @@ c = MyClass(21)
 print("The answer is " .. c:get_value())
 c:set_value(42)
 print("The answer is " .. c:get_value())
+
+
+-- Inheritance
+-- Kudos: https://ozzypig.com/2018/05/10/object-oriented-programming-in-lua-part-5-inheritance
+local MySubClass = {}
+
+-- Failed table lookups on the instances should fallback to the subclass table
+MySubClass.__index = MySubClass
+
+setmetatable(MySubClass, {
+  -- Calls to MySubClass() return MySubClass.new()
+  __call = function (cls, ...)
+    return cls.new(...)
+  end,
+  -- Inheritance
+  -- Failed lookips on class, go to superclass
+  __index = MyClass
+})
+
+function MySubClass.new(init)
+  -- Create a new instance of MyClass, but give it metatable of subclass
+  local self = setmetatable(MyClass.new(init), MySubClass)
+  return self
+end
+
+function MySubClass:increment_value()
+  self.value = self.value + 1
+end
+
+s = MySubClass(21)
+print("The answer is " .. s:get_value())
+s:set_value(42)
+print("The answer is " .. s:get_value())
+s:increment_value()
+print("The answer is " .. s:get_value())
