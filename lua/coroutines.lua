@@ -39,3 +39,21 @@ for j = 1,10 do
   value = c3(j)
   print(value)
 end
+
+print("Example of coroutine as callback.")
+print("Possibly useful because coroutines are non-preemptve, handling multiple callbacks.")
+function callback(a)
+  local state = a
+  while true do
+    local oldstate = state
+    state = coroutine.yield()
+    print("Changing state from " .. oldstate .. " to " .. state)
+  end
+end
+cb = coroutine.wrap(callback)
+
+for i,s in ipairs({ "red", "yellow", "green", "blue" }) do
+  cb(s)
+end
+
+os.exit(0)
