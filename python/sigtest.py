@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 #
 # Demononstrat signals and that a SIGINT doesn't kill a chld thread
 #
