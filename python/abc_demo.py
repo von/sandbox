@@ -17,7 +17,7 @@ class Base(object, metaclass=abc.ABCMeta):
         return
 
     def do_something(self):
-        """Abstract classes can non-abstract methods"""
+        """Abstract classes can have non-abstract methods"""
         print("I do something!")
 
 #
@@ -30,6 +30,7 @@ class Implementation(Base):
         """Implementation of abstract method"""
         self.do_something()
 
+
 Implementation().abstractmethod()
 
 #
@@ -40,15 +41,16 @@ Implementation().abstractmethod()
 class IncompleteImplementation(Base):
     pass
 
+
 try:
     # If you try to instantiate an incomplete implementation, you get a
     # TypeError
     IncompleteImplementation()
 except TypeError:
-    pass
+    print("An incomplete implementation raised a TypeError")
 else:
-    print("Weird, creating an incomplete implementation ")
-    "didn't raise a TypeError"
+    print("Weird, creating an incomplete implementation "
+          "didn't raise a TypeError")
 
 
 #
@@ -62,6 +64,7 @@ class Implementation2:
         """Implementation of abstract method"""
         self.do_something()
 
+
 Base.register(Implementation2)
 # Will appear to be a subclass
 print('Registered is subclass:', issubclass(Implementation2, Base))
@@ -71,7 +74,7 @@ try:
     Implementation2().abstractmethod()
 except AttributeError:
     pass
-except:
+else:
     print("Weird, registered class seems to have inheritied...")
 
 
@@ -81,8 +84,9 @@ except:
 class IncompleteImplementation2:
     pass
 
+
 Base.register(IncompleteImplementation2)
-# But this doesn't see to raise any exception...
+# But this doesn't seem to raise any exception...
 IncompleteImplementation2()
 
 print("Success.")
