@@ -8,17 +8,20 @@ import signal
 import time
 from threading import Thread
 
+
 class PassReader(Thread):
     def run(self):
         print("Don't enter a password, just wait...")
         password = getpass.getpass()
         print(password)
 
+
 class Killer(Thread):
     def run(self):
         time.sleep(3)
         print("Sending SIGKILL to  myself...")
         os.kill(os.getpid(), signal.SIGKILL)
+
 
 p = PassReader()
 p.start()
