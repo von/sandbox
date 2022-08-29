@@ -44,3 +44,6 @@ def make_counter(start=1):
 
 counter = make_counter(4)
 print(f"{counter()} {counter()} {counter()}")
+
+# Show formatting
+print(f"{counter():02d} {counter():03d} {counter():04d}")
