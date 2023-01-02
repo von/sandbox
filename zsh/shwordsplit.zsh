@@ -74,7 +74,7 @@ echo "print-stuff-eval \${s} = " $(print-stuff-eval ${s})
 echo
 echo "Arrays may be a better way."
 echo "Use eval to split the string and create the array:"
-echo "eval \"words=(${s})\""
+echo "eval \"words=(\${s})\""
 eval "words=(${s})"
 echo "\${#words} = ${#words}"
 # The following uses RC_EXPAND_PARAM
