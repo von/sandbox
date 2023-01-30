@@ -82,4 +82,11 @@ echo "Elements of words are:" \"${^words}\"
 echo "arg-count \${words[@]} = " $(arg-count ${words[@]})
 echo "print-stuff \${words[@]} = " $(print-stuff ${words[@]})
 
+echo
+echo "Can also pass as one string and use eval and an array in the function"
+echo "to split the string."
+print-split-stuff() { eval "a=($@)" ; print ${a} }
+whence -f print-split-stuff
+echo "print-split-stuff \${s} = " $(print-split-stuff ${s})
+
 exit 0
