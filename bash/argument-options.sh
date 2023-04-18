@@ -7,7 +7,7 @@
 # Everything but last parameter is an option.
 # Use arrays to preserves whitespace in options
 declare -a options
-options=( ${@:1:$#-1} ) # all parameters except the last
+options=( "${@:1:$#-1}" ) # all parameters except the last
 echo "Options: ${options[@]@Q}"
 
 # Last parameter is special.
