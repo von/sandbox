@@ -4,7 +4,7 @@
 options=${*%${!#}} # all parameters except the last
 echo "Options: ${options}"
 
-last=${@:$#} # last parameter 
+last=${@:$#} # last parameter
 echo "Last parameter: ${last}"
 
 exit 0
