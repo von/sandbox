@@ -8,7 +8,15 @@
 # Use arrays to preserves whitespace in options
 declare -a options
 options=( "${@:1:$#-1}" ) # all parameters except the last
+
+# '@Q' here adds quotes to options so when concatenated into string
+# they get separated.
 echo "Options: ${options[@]@Q}"
+
+# No '@Q' here as extra quotes become part of option
+for option in "${options[@]}" ; do
+  echo "Option: $option"
+done
 
 # Last parameter is special.
 last=${@:$#} # last parameter
