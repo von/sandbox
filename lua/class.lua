@@ -17,9 +17,9 @@ setmetatable(MyClass, {
 
 -- syntax equivalent to "MyClass.new = function..."
 function MyClass.new(init)
-  local self = setmetatable({}, MyClass)
-  self.value = init
-  return self
+  local instance = setmetatable({}, MyClass)
+  instance.value = init
+  return instance
 end
 
 -- Examples methods
@@ -44,26 +44,39 @@ print("The answer is " .. c:get_value())
 
 -- Inheritance
 -- Kudos: https://ozzypig.com/2018/05/10/object-oriented-programming-in-lua-part-5-inheritance
-local MySubClass = {}
+print("Subclass stuff...")
 
--- Failed table lookups on the instances should fallback to the subclass table
-MySubClass.__index = MySubClass
+-- Given a class, return a table set up as a subclass
+-- Could easily be a method on class
+function make_subclass(cls)
+  local subcls = {}
 
-setmetatable(MySubClass, {
-  -- Calls to MySubClass() return MySubClass.new()
-  __call = function (cls, ...)
-    return cls.new(...)
-  end,
-  -- Inheritance
-  -- Failed lookips on class, go to superclass
-  __index = MyClass
-})
+  -- Failed table lookups on the instances should fallback to the subclass table
+  subcls.__index = subcls
+
+  -- Syntaxic sugar
+  subcls.__super = cls
+
+  -- Inheritance: Failed lookups on subclass go to superclass
+  setmetatable(subcls, {
+    __index = cls
+  })
+
+  return subcls
+end
+
+local MySubClass = make_subclass(MyClass)
 
 function MySubClass.new(init)
   -- Create a new instance of MyClass, but give it metatable of subclass
-  local self = setmetatable(MyClass.new(init), MySubClass)
-  return self
+  local instance = setmetatable(MyClass.new(init), MySubClass)
+  return instance
 end
+
+-- Calls to MySubClass() return MySubClass.new()
+-- Could do this in make_subclass(), but isn't actually
+-- required for subclass.
+getmetatable(MySubClass).__call = function (cls, ...) return cls.new(...) end
 
 function MySubClass:increment_value()
   self.value = self.value + 1
