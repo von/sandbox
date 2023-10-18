@@ -2,10 +2,12 @@
 -- Example of a class in Lua
 -- Kudos: http://lua-users.org/wiki/ObjectOrientationTutorial
 
--- The table representing the class, which will double as the metatable for the instances
+-- The table representing the class, which will double as the metatable for
+-- the instances
 local MyClass = {}
 
--- Failed table lookups on the instances should fallback to the class table, to get methods
+-- Failed table lookups on the instances should fallback to the class table,
+-- to get methods
 MyClass.__index = MyClass
 
 -- Calls to MyClass() return MyClass.new()
@@ -49,6 +51,7 @@ print("Subclass stuff...")
 -- Given a class, return a table set up as a subclass
 -- Could easily be a method on class
 function make_subclass(cls)
+  -- Again subcls will be metatable for its instances
   local subcls = {}
 
   -- Failed table lookups on the instances should fallback to the subclass table
