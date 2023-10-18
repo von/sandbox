@@ -30,7 +30,7 @@ function f2()
 end
 
 -- One can get results out of pcall with a closure
--- (Assuming the closure doesn't throw an error)
+-- (Assuming the closure doesnot throw an error)
 local msg=""
 result, err = pcall(function() msg=f2() end)
 print("Return value from f2(): " .. msg)
