@@ -47,3 +47,14 @@ print(f"{counter()} {counter()} {counter()}")
 
 # Show formatting
 print(f"{counter():02d} {counter():03d} {counter():04d}")
+
+# Use single-quote/double quote for dictionaries
+# Kudos: https://stackoverflow.com/a/43488930/197789
+d = {
+    "hello": "world",
+    "foo": "bar"
+}
+print(f'Hello {d["hello"]} foo {d["foo"]}')
+
+# Though, format() may be easier...
+print("Hello {hello} foo {foo}".format(**d))
