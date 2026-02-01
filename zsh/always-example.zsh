@@ -11,7 +11,7 @@ echo "Status should be 0: $?"
 
 {
   foo="bar"
-  echo "Beofre an error..."
+  echo "Before an error..."
   break  # will cause error
   echo "After error - shouldn't see this."
 } always {
